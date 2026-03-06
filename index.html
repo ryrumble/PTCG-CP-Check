@@ -115,8 +115,8 @@ function mkTheme(dark) {
     cardBorderPlayed: "rgba(255,255,255,0.055)",
     cardBorderUpcoming: "rgba(255,255,255,0.09)",
     text:         "#e2e8f0",
-    textMuted:    "#475569",
-    textDim:      "#2d3748",
+    textMuted:    "#64748b",
+    textDim:      "#64748b",
     textSub:      "#94a3b8",
     tableDark:    "rgba(0,0,0,0.12)",
     tableDivider: "rgba(255,255,255,0.1)",
@@ -125,20 +125,21 @@ function mkTheme(dark) {
     tableHeadBorder: "rgba(255,255,255,0.08)",
     btnInactiveBg: "rgba(255,255,255,0.03)",
     btnInactiveBorder: "rgba(255,255,255,0.08)",
-    btnInactiveColor: "#4a5568",
+    btnInactiveColor: "#94a3b8",
     cpLabelColor: "#60a5fa",
     resultPanelDefault: "rgba(255,255,255,0.02)",
     resultPanelBorder:  "rgba(255,255,255,0.07)",
-    resultTextEmpty:    "#334155",
+    resultTextEmpty:    "#94a3b8",
     selBg:        "rgba(255,255,255,0.05)",
     selBorder:    "rgba(255,255,255,0.1)",
     selColor:     "#cbd5e1",
     addBtnBg:     "rgba(255,255,255,0.015)",
     addBtnBorder: "rgba(255,255,255,0.08)",
-    addBtnColor:  "#2d3748",
+    addBtnColor:  "#64748b",
     divider:      "rgba(255,255,255,0.07)",
-    noDataColor:  "#2d3748",
-    subTotal:     "#64748b",
+    noDataColor:  "#475569",
+    subTotal:     "#94a3b8",
+    top5SumColor: "#94a3b8",
   } : {
     pageBg:       "#eef2f7",
     cardBg:       "#ffffff",
@@ -170,6 +171,7 @@ function mkTheme(dark) {
     divider:      "rgba(0,0,0,0.08)",
     noDataColor:  "#94a3b8",
     subTotal:     "#475569",
+    top5SumColor: "#64748b",
   };
 }
 
@@ -640,7 +642,7 @@ function App() {
                       <Chip label={cpToLabel("ic", cp)} cp={cp} variant="upcoming-ic" dark={dark} />
                     </td>
                   ))}
-                  <td style={{ ...td, fontFamily: "'IBM Plex Mono', monospace", color: T.textMuted, fontSize: 11 }}>{row.mSum}</td>
+                  <td style={{ ...td, fontFamily: "'IBM Plex Mono', monospace", color: T.top5SumColor, fontSize: 11, fontWeight: 500 }}>{row.mSum}</td>
                   <td style={td}>
                     <span style={{
                       fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600, fontSize: 13,
