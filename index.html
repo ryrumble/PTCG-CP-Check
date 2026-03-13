@@ -11,72 +11,290 @@
     body { margin: 0; padding: 0; transition: background 0.2s; }
     body.dark  { background: #080c18; }
     body.light { background: #eef2f7; }
+
+    /* ═══════════════════════════════════════════════
+       CSS COLOR TOKENS — edit here to change globally
+       ═══════════════════════════════════════════════ */
+    body.dark {
+      --text-primary:          #e2e8f0;
+      --text-muted:            #64748b;
+      --text-dim:              #64748b;
+      --text-sub:              #94a3b8;
+      --text-empty:            #94a3b8;
+      --text-top5sum:          #94a3b8;
+      --page-bg:               #080c18;
+      --card-bg:               rgba(255,255,255,0.025);
+      --card-border:           rgba(255,255,255,0.07);
+      --card-border-played:    rgba(255,255,255,0.055);
+      --card-border-upcoming:  rgba(255,255,255,0.09);
+      --btn-inactive-bg:       rgba(255,255,255,0.03);
+      --btn-inactive-border:   rgba(255,255,255,0.08);
+      --btn-inactive-color:    #94a3b8;
+      --btn-active-color:      #a5b4fc;
+      --btn-cp-inactive:       #60a5fa;
+      --btn-cp-active:         #818cf8;
+      --btn-number-color:      #64748b;
+      --badge-reg-bg:          rgba(59,130,246,0.12);
+      --badge-reg-border:      rgba(59,130,246,0.35);
+      --badge-reg-color:       #93c5fd;
+      --badge-ic-bg:           rgba(139,92,246,0.18);
+      --badge-ic-border:       rgba(139,92,246,0.45);
+      --badge-ic-color:        #c4b5fd;
+      --badge-played-bg:       rgba(100,116,139,0.12);
+      --badge-played-border:   rgba(100,116,139,0.3);
+      --badge-played-color:    #64748b;
+      --badge-upcoming-bg:     rgba(34,197,94,0.1);
+      --badge-upcoming-border: rgba(34,197,94,0.3);
+      --badge-upcoming-color:  #4ade80;
+      --chip-played-bg:        rgba(148,163,184,0.08);
+      --chip-played-border:    rgba(148,163,184,0.2);
+      --chip-played-color:     #64748b;
+      --chip-played-cp:        #60a5fa;
+      --chip-reg-bg:           rgba(99,102,241,0.12);
+      --chip-reg-border:       rgba(99,102,241,0.3);
+      --chip-reg-color:        #a5b4fc;
+      --chip-reg-cp:           #818cf8;
+      --chip-ic-bg:            rgba(139,92,246,0.12);
+      --chip-ic-border:        rgba(139,92,246,0.3);
+      --chip-ic-color:         #c4b5fd;
+      --chip-ic-cp:            #a78bfa;
+      --chip-dash-bg:          rgba(255,255,255,0.02);
+      --chip-dash-border:      rgba(255,255,255,0.06);
+      --chip-dash-color:       #475569;
+      --table-dark-bg:         rgba(0,0,0,0.12);
+      --table-divider:         rgba(255,255,255,0.1);
+      --table-row-border:      rgba(255,255,255,0.03);
+      --table-head-border:     rgba(255,255,255,0.08);
+      --th-upcoming-reg:       #93c5fd;
+      --th-upcoming-ic:        #c4b5fd;
+      --th-played-bg:          #0e1525;
+      --table-outline:         rgba(99,102,241,0.5);
+      --sel-bg:                rgba(255,255,255,0.05);
+      --sel-border:            rgba(255,255,255,0.1);
+      --sel-color:             #cbd5e1;
+      --add-btn-bg:            rgba(255,255,255,0.015);
+      --add-btn-border:        rgba(255,255,255,0.08);
+      --add-btn-color:         #64748b;
+      --divider-color:         rgba(255,255,255,0.07);
+      --no-data-color:         #475569;
+      --sub-total-color:       #94a3b8;
+      --toggle-bg:             rgba(255,255,255,0.07);
+      --toggle-border:         rgba(255,255,255,0.15);
+      --thresh-200:            #64748b;
+      --thresh-700:            #fb923c;
+      --thresh-725:            #fbbf24;
+      --thresh-740:            #facc15;
+      --thresh-775:            #86efac;
+      --thresh-800:            #4ade80;
+      --total-cp-unmet:        #64748b;
+    }
+
+    body.light {
+      --text-primary:          #0f172a;
+      --text-muted:            #374151;
+      --text-dim:              #4b5563;
+      --text-sub:              #374151;
+      --text-empty:            #6b7280;
+      --text-top5sum:          #374151;
+      --page-bg:               #eef2f7;
+      --card-bg:               #ffffff;
+      --card-border:           rgba(0,0,0,0.08);
+      --card-border-played:    rgba(0,0,0,0.06);
+      --card-border-upcoming:  rgba(0,0,0,0.1);
+      --btn-inactive-bg:       rgba(0,0,0,0.04);
+      --btn-inactive-border:   rgba(0,0,0,0.12);
+      --btn-inactive-color:    #1e3a5f;
+      --btn-active-color:      #3730a3;
+      --btn-cp-inactive:       #1d4ed8;
+      --btn-cp-active:         #4338ca;
+      --btn-number-color:      #374151;
+      --badge-reg-bg:          rgba(29,78,216,0.1);
+      --badge-reg-border:      rgba(29,78,216,0.4);
+      --badge-reg-color:       #1e40af;
+      --badge-ic-bg:           rgba(109,40,217,0.1);
+      --badge-ic-border:       rgba(109,40,217,0.4);
+      --badge-ic-color:        #5b21b6;
+      --badge-played-bg:       rgba(100,116,139,0.1);
+      --badge-played-border:   rgba(100,116,139,0.3);
+      --badge-played-color:    #374151;
+      --badge-upcoming-bg:     rgba(21,128,61,0.1);
+      --badge-upcoming-border: rgba(21,128,61,0.3);
+      --badge-upcoming-color:  #15803d;
+      --chip-played-bg:        rgba(0,0,0,0.05);
+      --chip-played-border:    rgba(0,0,0,0.12);
+      --chip-played-color:     #374151;
+      --chip-played-cp:        #1d4ed8;
+      --chip-reg-bg:           rgba(99,102,241,0.1);
+      --chip-reg-border:       rgba(99,102,241,0.35);
+      --chip-reg-color:        #3730a3;
+      --chip-reg-cp:           #4338ca;
+      --chip-ic-bg:            rgba(109,40,217,0.1);
+      --chip-ic-border:        rgba(109,40,217,0.3);
+      --chip-ic-color:         #5b21b6;
+      --chip-ic-cp:            #6d28d9;
+      --chip-dash-bg:          rgba(0,0,0,0.04);
+      --chip-dash-border:      rgba(0,0,0,0.1);
+      --chip-dash-color:       #6b7280;
+      --table-dark-bg:         rgba(0,0,0,0.04);
+      --table-divider:         rgba(0,0,0,0.12);
+      --table-row-border:      rgba(0,0,0,0.05);
+      --table-head-border:     rgba(0,0,0,0.08);
+      --th-upcoming-reg:       #1e3a8a;
+      --th-upcoming-ic:        #4c1d95;
+      --th-played-bg:          #dde3ef;
+      --table-outline:         rgba(79,70,229,0.45);
+      --sel-bg:                #ffffff;
+      --sel-border:            rgba(0,0,0,0.15);
+      --sel-color:             #0f172a;
+      --add-btn-bg:            rgba(0,0,0,0.02);
+      --add-btn-border:        rgba(0,0,0,0.1);
+      --add-btn-color:         #4b5563;
+      --divider-color:         rgba(0,0,0,0.08);
+      --no-data-color:         #6b7280;
+      --sub-total-color:       #374151;
+      --toggle-bg:             rgba(0,0,0,0.06);
+      --toggle-border:         rgba(0,0,0,0.15);
+      --thresh-200:            #475569;
+      --thresh-700:            #9a3412;
+      --thresh-725:            #92400e;
+      --thresh-740:            #854d0e;
+      --thresh-775:            #166534;
+      --thresh-800:            #15803d;
+      --total-cp-unmet:        #374151;
+    }
+
+    /* ── Sticky controls bar ── */
+    .controls-bar {
+      position: sticky; top: 0; z-index: 50;
+      padding: 10px 18px 8px; margin: 0 -18px;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+    }
+    body.dark  .controls-bar { background: rgba(8,12,24,0.92); }
+    body.light .controls-bar { background: rgba(238,242,247,0.92); }
+
+    /* ── Sticky thead (sticks at top:0 within scroll container) ── */
+    .combo-table thead th { position: sticky; top: 0; z-index: 40; }
+    body.dark  .combo-table thead th { background: #0e1525; }
+    body.light .combo-table thead th { background: #e8edf4; }
+
+    /* ── Table scroll wrapper (own scroll context, square corners) ── */
+    .table-scroll-wrap {
+      overflow: auto;
+      max-height: calc(100vh - var(--controls-bar-height, 90px) - 20px);
+      border-radius: 3px;
+      border: 2px solid var(--table-outline);
+    }
+
     select option { background: #1e293b; color: #e2e8f0; }
+
     .tooltip-wrap { position: relative; display: inline-flex; }
     .tooltip-box {
-      display: none; position: absolute; right: 0; top: 28px;
-      width: 280px; background: #1e293b; border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px; padding: 12px 14px; font-size: 11px; line-height: 1.6;
-      color: #94a3b8; z-index: 100; pointer-events: none;
+      display: none; position: absolute; right: 0; top: 44px;
+      width: 290px; border-radius: 8px; padding: 12px 14px;
+      font-size: 11px; line-height: 1.65; z-index: 100; pointer-events: none;
     }
-    .light .tooltip-box { background: #fff; border-color: rgba(0,0,0,0.12); color: #475569; }
+    body.dark  .tooltip-box { background: #1e293b; border: 1px solid rgba(255,255,255,0.12); color: #94a3b8; }
+    body.light .tooltip-box { background: #fff;    border: 1px solid rgba(0,0,0,0.12);       color: #475569; }
     .tooltip-wrap:hover .tooltip-box { display: block; }
+
+    /* ── Inline hint badges in header text ── */
+    .hint-badge {
+      display: inline-flex; align-items: center; gap: 3px;
+      border-radius: 5px; padding: 1px 7px; font-size: 10px;
+      font-weight: 500; letter-spacing: 0.04em; vertical-align: middle;
+      border-width: 1px; border-style: solid;
+    }
+    .hint-badge-reg      { background: var(--badge-reg-bg);      border-color: var(--badge-reg-border);      color: var(--badge-reg-color);      }
+    .hint-badge-ic       { background: var(--badge-ic-bg);       border-color: var(--badge-ic-border);       color: var(--badge-ic-color);       }
+    .hint-badge-played   { background: var(--badge-played-bg);   border-color: var(--badge-played-border);   color: var(--badge-played-color);   }
+    .hint-badge-upcoming { background: var(--badge-upcoming-bg); border-color: var(--badge-upcoming-border); color: var(--badge-upcoming-color); }
   </style>
 </head>
 <body class="dark">
   <div id="root"></div>
   <script type="text/babel">
 
+/* ══════════════════════════════════
+   PLACEMENT DATA
+══════════════════════════════════ */
 const REG_PLACEMENTS = [
-  { label: "2nd",   cp: 325 },
-  { label: "T4",    cp: 300 },
-  { label: "T8",    cp: 280 },
-  { label: "T16",   cp: 200 },
-  { label: "T32",   cp: 160 },
-  { label: "T64",   cp: 120 },
-  { label: "T128",  cp: 80  },
-  { label: "T256",  cp: 60  },
-  { label: "T512",  cp: 40  },
-  { label: "T1024", cp: 20  },
+  { label: "2nd",   cp: 325 }, { label: "T4",    cp: 300 },
+  { label: "T8",    cp: 280 }, { label: "T16",   cp: 200 },
+  { label: "T32",   cp: 160 }, { label: "T64",   cp: 120 },
+  { label: "T128",  cp: 80  }, { label: "T256",  cp: 60  },
+  { label: "T512",  cp: 40  }, { label: "T1024", cp: 20  },
 ];
 
 const IC_PLACEMENTS = [
-  { label: "T8",    cp: 380 },
-  { label: "T16",   cp: 300 },
-  { label: "T32",   cp: 240 },
-  { label: "T64",   cp: 180 },
-  { label: "T128",  cp: 140 },
-  { label: "T256",  cp: 100 },
-  { label: "T512",  cp: 80  },
-  { label: "T1024", cp: 40  },
+  { label: "T8",    cp: 380 }, { label: "T16",   cp: 300 },
+  { label: "T32",   cp: 240 }, { label: "T64",   cp: 180 },
+  { label: "T128",  cp: 140 }, { label: "T256",  cp: 100 },
+  { label: "T512",  cp: 80  }, { label: "T1024", cp: 40  },
 ];
 
-const CUPS = 260;
-const TOP_N = 5;
-const THRESHOLDS = [760, 740, 720, 700, 680];
-const MAX_DISPLAY = 800;
+const CHALLENGE_PLACEMENTS = [
+  { label: "1st",   cp: 15 }, { label: "2nd", cp: 12 },
+  { label: "T4",    cp: 10 }, { label: "T8",  cp: 8  },
+  { label: "T16",   cp: 6  }, { label: "T32", cp: 4  },
+  { label: "No CP", cp: 0  },
+];
+
+const CUP_PLACEMENTS = [
+  { label: "1st",   cp: 50 }, { label: "2nd", cp: 40 },
+  { label: "T4",    cp: 32 }, { label: "T8",  cp: 25 },
+  { label: "T16",   cp: 20 }, { label: "T32", cp: 16 },
+  { label: "T64",   cp: 13 }, { label: "No CP", cp: 0 },
+];
+
+/* ══════════════════════════════════
+   CONSTANTS
+══════════════════════════════════ */
+const TOP_N          = 5;
+const CHALLENGE_BFL  = 4;
+const CUP_BFL        = 4;
+const MAX_DISPLAY    = 800;
+const THRESHOLDS     = [200, 700, 725, 740, 775, 800];
+const MIN_CP_OPTIONS = [200, 580, 620, 660, 700, 720, 725, 740, 760, 775, 780, 800];
 
 const SUBTITLES = [
-  "Enhanced!",
-  "Legal in Finland!",
-  "Jeepers!",
+  "Enhanced!", "Legal in Finland!", "Jeepers!",
   "Presented by Ryan R, the worst player who could qualify for worlds.",
-  "Smelly edition.",
-  "Bending the spoon..",
-  "sponsored by little Timmy",
-  "Getting to Worlds is kind of hard, huh.",
-  "Now with new car smell!",
+  "Smelly edition.", "Bending the spoon..", "sponsored by little Timmy",
+  "Getting to Worlds is kind of hard, huh.", "Now with new car smell!",
 ];
 
-function getThresholdInfo(total) {
-  if (total >= 760) return { color: "#4ade80", bg: "rgba(74,222,128,0.08)" };
-  if (total >= 740) return { color: "#86efac", bg: "rgba(134,239,172,0.07)" };
-  if (total >= 720) return { color: "#facc15", bg: "rgba(250,204,21,0.08)" };
-  if (total >= 700) return { color: "#fbbf24", bg: "rgba(251,191,36,0.07)" };
-  if (total >= 680) return { color: "#fb923c", bg: "rgba(251,146,60,0.07)" };
+const THRESH_COLORS = {
+  200: "var(--thresh-200)", 700: "var(--thresh-700)",
+  725: "var(--thresh-725)", 740: "var(--thresh-740)",
+  775: "var(--thresh-775)", 800: "var(--thresh-800)",
+};
+
+/* ══════════════════════════════════
+   THRESHOLD HELPERS
+══════════════════════════════════ */
+function getThresholdColor(total) {
+  if (total >= 800) return "var(--thresh-800)";
+  if (total >= 775) return "var(--thresh-775)";
+  if (total >= 740) return "var(--thresh-740)";
+  if (total >= 725) return "var(--thresh-725)";
+  if (total >= 700) return "var(--thresh-700)";
+  if (total >= 200) return "var(--thresh-200)";
+  return null;
+}
+function getThresholdBg(total) {
+  if (total >= 800) return "rgba(74,222,128,0.08)";
+  if (total >= 775) return "rgba(134,239,172,0.07)";
+  if (total >= 740) return "rgba(250,204,21,0.08)";
+  if (total >= 725) return "rgba(251,191,36,0.07)";
+  if (total >= 700) return "rgba(251,146,60,0.07)";
+  if (total >= 200) return "rgba(100,116,139,0.05)";
   return null;
 }
 
+/* ══════════════════════════════════
+   COMBO MATH
+══════════════════════════════════ */
 function multisetCombos(vals, k) {
   if (k === 0) return [[]];
   const res = [];
@@ -90,217 +308,303 @@ function multisetCombos(vals, k) {
   return res;
 }
 
+/* ══════════════════════════════════
+   PLACEMENT UTILS
+══════════════════════════════════ */
 const getPlacements = (type) => type === "ic" ? IC_PLACEMENTS : REG_PLACEMENTS;
-const getCP = (type, label) => getPlacements(type).find(p => p.label === label)?.cp ?? 0;
-const cpToLabel = (type, cp) => {
-  if (cp === 0) return "—";
-  return getPlacements(type).find(p => p.cp === cp)?.label ?? "?";
-};
+const getCP         = (type, label) => getPlacements(type).find(p => p.label === label)?.cp ?? 0;
+const cpToLabel     = (type, cp)    => getPlacements(type).find(p => p.cp === cp)?.label ?? "?";
 
+/* ══════════════════════════════════
+   DEFAULT STATE
+══════════════════════════════════ */
 let nextId = 6;
 const DEFAULT_EVENTS = [
-  { id: 0, type: "reg", status: "played",   placement: "T64"  },
-  { id: 1, type: "reg", status: "played",   placement: "T1024"},
-  { id: 2, type: "reg", status: "played",   placement: "T256" },
-  { id: 3, type: "reg", status: "upcoming", placement: null   },
-  { id: 4, type: "reg", status: "upcoming", placement: null   },
-  { id: 5, type: "ic",  status: "upcoming", placement: null   },
+  { id: 0, type: "reg", status: "played",   placement: "T64"   },
+  { id: 1, type: "reg", status: "played",   placement: "T1024" },
+  { id: 2, type: "reg", status: "played",   placement: "T256"  },
+  { id: 3, type: "reg", status: "upcoming", placement: null    },
+  { id: 4, type: "reg", status: "upcoming", placement: null    },
+  { id: 5, type: "ic",  status: "upcoming", placement: null    },
 ];
+// Default locals: all maxed → 4×15 + 4×50 = 260
+const DEFAULT_CHALLENGES = [15, 15, 15, 15];
+const DEFAULT_CUPS       = [50, 50, 50, 50];
 
-function mkTheme(dark) {
-  return dark ? {
-    pageBg:       "#080c18",
-    cardBg:       "rgba(255,255,255,0.025)",
-    cardBorder:   "rgba(255,255,255,0.07)",
-    cardBorderPlayed: "rgba(255,255,255,0.055)",
-    cardBorderUpcoming: "rgba(255,255,255,0.09)",
-    text:         "#e2e8f0",
-    textMuted:    "#64748b",
-    textDim:      "#64748b",
-    textSub:      "#94a3b8",
-    tableDark:    "rgba(0,0,0,0.12)",
-    tableDivider: "rgba(255,255,255,0.1)",
-    tableRowBorder: "rgba(255,255,255,0.03)",
-    tableHead:    "rgba(255,255,255,0.035)",
-    tableHeadBorder: "rgba(255,255,255,0.08)",
-    btnInactiveBg: "rgba(255,255,255,0.03)",
-    btnInactiveBorder: "rgba(255,255,255,0.08)",
-    btnInactiveColor: "#94a3b8",
-    cpLabelColor: "#60a5fa",
-    resultPanelDefault: "rgba(255,255,255,0.02)",
-    resultPanelBorder:  "rgba(255,255,255,0.07)",
-    resultTextEmpty:    "#94a3b8",
-    selBg:        "rgba(255,255,255,0.05)",
-    selBorder:    "rgba(255,255,255,0.1)",
-    selColor:     "#cbd5e1",
-    addBtnBg:     "rgba(255,255,255,0.015)",
-    addBtnBorder: "rgba(255,255,255,0.08)",
-    addBtnColor:  "#64748b",
-    divider:      "rgba(255,255,255,0.07)",
-    noDataColor:  "#475569",
-    subTotal:     "#94a3b8",
-    top5SumColor: "#94a3b8",
-  } : {
-    pageBg:       "#eef2f7",
-    cardBg:       "#ffffff",
-    cardBorder:   "rgba(0,0,0,0.08)",
-    cardBorderPlayed: "rgba(0,0,0,0.06)",
-    cardBorderUpcoming: "rgba(0,0,0,0.1)",
-    text:         "#0f172a",
-    textMuted:    "#64748b",
-    textDim:      "#94a3b8",
-    textSub:      "#475569",
-    tableDark:    "rgba(0,0,0,0.04)",
-    tableDivider: "rgba(0,0,0,0.12)",
-    tableRowBorder: "rgba(0,0,0,0.05)",
-    tableHead:    "rgba(0,0,0,0.04)",
-    tableHeadBorder: "rgba(0,0,0,0.08)",
-    btnInactiveBg: "rgba(0,0,0,0.03)",
-    btnInactiveBorder: "rgba(0,0,0,0.1)",
-    btnInactiveColor: "#64748b",
-    cpLabelColor: "#2563eb",
-    resultPanelDefault: "rgba(0,0,0,0.03)",
-    resultPanelBorder:  "rgba(0,0,0,0.08)",
-    resultTextEmpty:    "#94a3b8",
-    selBg:        "#ffffff",
-    selBorder:    "rgba(0,0,0,0.15)",
-    selColor:     "#0f172a",
-    addBtnBg:     "rgba(0,0,0,0.02)",
-    addBtnBorder: "rgba(0,0,0,0.1)",
-    addBtnColor:  "#94a3b8",
-    divider:      "rgba(0,0,0,0.08)",
-    noDataColor:  "#94a3b8",
-    subTotal:     "#475569",
-    top5SumColor: "#64748b",
-  };
+/* ══════════════════════════════════
+   SLOT ROW (used in LocalsEditor)
+══════════════════════════════════ */
+function SlotRow({ idx, placements, slots, setter }) {
+  const setSlot = (cp) => setter(s => s.map((v, i) => i === idx ? cp : v));
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 4 }}>
+      <span style={{ fontSize: 10, color: "var(--btn-number-color)", fontFamily: "'IBM Plex Mono', monospace", minWidth: 12, textAlign: "right" }}>{idx + 1}</span>
+      <div style={{ display: "flex", gap: 3, flexWrap: "wrap" }}>
+        {placements.map(p => {
+          const active = slots[idx] === p.cp;
+          return (
+            <button key={p.label} onClick={() => setSlot(p.cp)} style={{
+              background: active ? "rgba(99,102,241,0.22)" : "var(--btn-inactive-bg)",
+              border:     `1px solid ${active ? "#6366f1" : "var(--btn-inactive-border)"}`,
+              borderRadius: 5, padding: "2px 7px", cursor: "pointer",
+              color: active ? "var(--btn-active-color)" : "var(--btn-inactive-color)",
+              fontFamily: "'IBM Plex Mono', monospace", fontSize: 10,
+              display: "inline-flex", flexDirection: "column", alignItems: "center",
+              outline: "none", boxShadow: active ? "0 0 0 2px rgba(99,102,241,0.18)" : "none",
+              transition: "all 0.11s"
+            }}>
+              <span style={{ fontWeight: active ? 700 : 400, lineHeight: 1.2 }}>{p.label}</span>
+              <span style={{ fontSize: 8, color: active ? "var(--btn-cp-active)" : "var(--btn-cp-inactive)", lineHeight: 1.1 }}>{p.cp}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
+/* ══════════════════════════════════
+   LOCALS EDITOR COMPONENT
+══════════════════════════════════ */
+function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots, localCP }) {
+  const [open, setOpen] = React.useState(false);
+  const challengeTotal  = challengeSlots.reduce((a, b) => a + b, 0);
+  const cupTotal        = cupSlots.reduce((a, b) => a + b, 0);
+
+  return (
+    <div style={{ marginBottom: 12, background: "var(--card-bg)", border: "1px solid var(--card-border)", borderRadius: 9, overflow: "hidden" }}>
+      {/* Toggle header */}
+      <button onClick={() => setOpen(o => !o)} style={{
+        width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
+        background: "none", border: "none", padding: "10px 14px", cursor: "pointer",
+        color: "var(--text-primary)", outline: "none"
+      }}>
+        <span style={{ fontSize: 12, fontWeight: 500 }}>⚙ Edit Challenges / Cups CP</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontSize: 11, color: "var(--sub-total-color)", fontFamily: "'IBM Plex Mono', monospace" }}>
+            Challenges <strong style={{ color: "var(--text-primary)" }}>{challengeTotal}</strong>
+            {" + "}Cups <strong style={{ color: "var(--text-primary)" }}>{cupTotal}</strong>
+            {" = "}<strong style={{ color: "var(--text-primary)" }}>{localCP} CP</strong>
+          </span>
+          <span style={{ fontSize: 12, color: "var(--text-muted)", display: "inline-block", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>▾</span>
+        </div>
+      </button>
+
+      {/* Expanded panel */}
+      {open && (
+        <div style={{ padding: "0 14px 14px", borderTop: "1px solid var(--card-border)" }}>
+          <div style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingTop: 12 }}>
+            {/* Challenges */}
+            <div style={{ flex: "1 1 240px", minWidth: 240 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text-primary)" }}>
+                  Challenges <span style={{ fontSize: 10, fontWeight: 400, color: "var(--text-muted)" }}>(BFL {CHALLENGE_BFL})</span>
+                </span>
+                <span style={{ fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", color: "var(--sub-total-color)" }}>{challengeTotal} / {CHALLENGE_BFL * 15} CP</span>
+              </div>
+              {challengeSlots.map((_, idx) => (
+                <SlotRow key={idx} idx={idx} placements={CHALLENGE_PLACEMENTS} slots={challengeSlots} setter={setChallengeSlots} />
+              ))}
+            </div>
+            {/* Cups */}
+            <div style={{ flex: "1 1 320px", minWidth: 300 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+                <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text-primary)" }}>
+                  Cups <span style={{ fontSize: 10, fontWeight: 400, color: "var(--text-muted)" }}>(BFL {CUP_BFL})</span>
+                </span>
+                <span style={{ fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", color: "var(--sub-total-color)" }}>{cupTotal} / {CUP_BFL * 50} CP</span>
+              </div>
+              {cupSlots.map((_, idx) => (
+                <SlotRow key={idx} idx={idx} placements={CUP_PLACEMENTS} slots={cupSlots} setter={setCupSlots} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════
+   CHIP COMPONENTS
+══════════════════════════════════ */
+function Chip({ label, cp, variant }) {
+  const cfg = {
+    "played-reg":  { bg:"var(--chip-played-bg)", border:"var(--chip-played-border)", color:"var(--chip-played-color)", cpColor:"var(--chip-played-cp)" },
+    "played-ic":   { bg:"var(--chip-played-bg)", border:"var(--chip-played-border)", color:"var(--chip-played-color)", cpColor:"var(--chip-played-cp)" },
+    "upcoming-reg":{ bg:"var(--chip-reg-bg)",    border:"var(--chip-reg-border)",    color:"var(--chip-reg-color)",    cpColor:"var(--chip-reg-cp)"    },
+    "upcoming-ic": { bg:"var(--chip-ic-bg)",     border:"var(--chip-ic-border)",     color:"var(--chip-ic-color)",     cpColor:"var(--chip-ic-cp)"     },
+  };
+  const s = cfg[variant] || cfg["upcoming-reg"];
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center", gap: 3,
+      background: s.bg, border: `1px solid ${s.border}`,
+      borderRadius: 5, padding: "2px 7px",
+      fontFamily: "'IBM Plex Mono', monospace", color: s.color, whiteSpace: "nowrap", fontSize: 11
+    }}>
+      {label} <span style={{ color: s.cpColor, fontSize: 9, fontWeight: 600 }}>({cp})</span>
+    </span>
+  );
+}
+
+function DashChip() {
+  return (
+    <span style={{
+      display: "inline-flex", alignItems: "center",
+      background: "var(--chip-dash-bg)", border: "1px solid var(--chip-dash-border)",
+      borderRadius: 5, padding: "2px 8px",
+      fontFamily: "'IBM Plex Mono', monospace",
+      color: "var(--chip-dash-color)", fontSize: 11, fontStyle: "italic"
+    }}>—</span>
+  );
+}
+
+/* ══════════════════════════════════
+   MAIN APP
+══════════════════════════════════ */
 function App() {
   const [dark, setDark] = React.useState(true);
-  const T = React.useMemo(() => mkTheme(dark), [dark]);
+  React.useEffect(() => { document.body.className = dark ? "dark" : "light"; }, [dark]);
 
+  // measure controls bar for sticky thead offset
+  const controlsRef = React.useRef(null);
   React.useEffect(() => {
-    document.body.className = dark ? "dark" : "light";
-  }, [dark]);
+    function measure() {
+      if (controlsRef.current) {
+        document.documentElement.style.setProperty('--controls-bar-height', controlsRef.current.offsetHeight + 'px');
+      }
+    }
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
-  const [subtitle] = React.useState(() =>
-    SUBTITLES[Math.floor(Math.random() * SUBTITLES.length)]
+  const [subtitle] = React.useState(() => SUBTITLES[Math.floor(Math.random() * SUBTITLES.length)]);
+
+  const [events,         setEvents]         = React.useState(DEFAULT_EVENTS);
+  const [minTotal,       setMinTotal]       = React.useState(740);
+  const [sortDir,        setSortDir]        = React.useState("asc");
+  const [regCapCp,       setRegCapCp]       = React.useState(null);
+  const [icCapCp,        setIcCapCp]        = React.useState(null);
+  const [copyStatus,     setCopyStatus]     = React.useState("");
+  const [challengeSlots, setChallengeSlots] = React.useState(DEFAULT_CHALLENGES);
+  const [cupSlots,       setCupSlots]       = React.useState(DEFAULT_CUPS);
+
+  const localCP = React.useMemo(() =>
+    challengeSlots.reduce((a,b)=>a+b,0) + cupSlots.reduce((a,b)=>a+b,0),
+    [challengeSlots, cupSlots]
   );
 
-  const [events, setEvents] = React.useState(DEFAULT_EVENTS);
-  const [minTotal, setMinTotal] = React.useState(740);
-  const [sortDir, setSortDir] = React.useState("asc");
-  const [regCapCp, setRegCapCp] = React.useState(null);
-  const [icCapCp, setIcCapCp] = React.useState(null);
-  const [copyStatus, setCopyStatus] = React.useState("");
+  const toggleType      = (id) => setEvents(evs => evs.map(e => e.id===id ? {...e,type:e.type==="reg"?"ic":"reg",placement:null} : e));
+  const toggleStatus    = (id) => setEvents(evs => evs.map(e => e.id===id ? {...e,status:e.status==="played"?"upcoming":"played",placement:null} : e));
+  const togglePlacement = (id, label) => setEvents(evs => evs.map(e => e.id===id ? {...e,placement:e.placement===label?null:label} : e));
+  const addEvent        = () => { if (events.length < 12) setEvents(evs => [...evs, {id:nextId++,type:"reg",status:"upcoming",placement:null}]); };
+  const removeEvent     = (id) => { if (events.length > 1) setEvents(evs => evs.filter(e => e.id!==id)); };
 
-  const toggleType = (id) =>
-    setEvents(evs => evs.map(e => e.id === id
-      ? { ...e, type: e.type === "reg" ? "ic" : "reg", placement: null } : e));
-
-  const toggleStatus = (id) =>
-    setEvents(evs => evs.map(e => e.id === id
-      ? { ...e, status: e.status === "played" ? "upcoming" : "played", placement: null } : e));
-
-  const togglePlacement = (id, label) =>
-    setEvents(evs => evs.map(e => e.id === id
-      ? { ...e, placement: e.placement === label ? null : label } : e));
-
-  const addEvent = () => {
-    if (events.length >= 10) return;
-    setEvents(evs => [...evs, { id: nextId++, type: "reg", status: "upcoming", placement: null }]);
-  };
-
-  const removeEvent = (id) => {
-    if (events.length <= 1) return;
-    setEvents(evs => evs.filter(e => e.id !== id));
-  };
-
-  const playedRegEvents   = React.useMemo(() => events.filter(e => e.status === "played"   && e.type === "reg"), [events]);
-  const playedICEvents    = React.useMemo(() => events.filter(e => e.status === "played"   && e.type === "ic"),  [events]);
-  const upcomingRegEvents = React.useMemo(() => events.filter(e => e.status === "upcoming" && e.type === "reg"), [events]);
-  const upcomingICEvents  = React.useMemo(() => events.filter(e => e.status === "upcoming" && e.type === "ic"),  [events]);
+  const playedRegEvents   = React.useMemo(() => events.filter(e=>e.status==="played"  &&e.type==="reg"), [events]);
+  const playedICEvents    = React.useMemo(() => events.filter(e=>e.status==="played"  &&e.type==="ic"),  [events]);
+  const upcomingRegEvents = React.useMemo(() => events.filter(e=>e.status==="upcoming"&&e.type==="reg"), [events]);
+  const upcomingICEvents  = React.useMemo(() => events.filter(e=>e.status==="upcoming"&&e.type==="ic"),  [events]);
 
   const nUpcomingReg = upcomingRegEvents.length;
   const nUpcomingIC  = upcomingICEvents.length;
+  const nUpcoming    = nUpcomingReg + nUpcomingIC;
 
+  // Partial total — works even if not all events selected
   const allSelectedCPs = React.useMemo(() =>
-    events.filter(e => e.placement).map(e => getCP(e.type, e.placement)).sort((a, b) => b - a),
+    events.filter(e=>e.placement).map(e=>getCP(e.type,e.placement)).sort((a,b)=>b-a),
     [events]
   );
-  const top5Sum = allSelectedCPs.slice(0, TOP_N).reduce((a, b) => a + b, 0);
-  const totalCP = top5Sum + CUPS;
-  const allSelected = events.every(e => e.placement);
-  const ti = allSelected ? getThresholdInfo(totalCP) : null;
+  const top5Sum    = allSelectedCPs.slice(0,TOP_N).reduce((a,b)=>a+b,0);
+  const totalCP    = top5Sum + localCP;
+  const allSelected = events.every(e=>e.placement);
+  const nUnselected = events.filter(e=>!e.placement).length;
+  const topColor   = getThresholdColor(totalCP);
+  const topBg      = getThresholdBg(totalCP);
 
   const playedRegData = React.useMemo(() =>
-    playedRegEvents.filter(e => e.placement)
-      .map(e => ({ label: e.placement, cp: getCP("reg", e.placement) }))
-      .sort((a, b) => b.cp - a.cp),
+    playedRegEvents.filter(e=>e.placement).map(e=>({label:e.placement,cp:getCP("reg",e.placement)})).sort((a,b)=>b.cp-a.cp),
     [playedRegEvents]
   );
   const playedICData = React.useMemo(() =>
-    playedICEvents.filter(e => e.placement)
-      .map(e => ({ label: e.placement, cp: getCP("ic", e.placement) }))
-      .sort((a, b) => b.cp - a.cp),
+    playedICEvents.filter(e=>e.placement).map(e=>({label:e.placement,cp:getCP("ic",e.placement)})).sort((a,b)=>b.cp-a.cp),
     [playedICEvents]
   );
 
-  // 0 = did not place / no points scored
   const allowedRegCPs = React.useMemo(() =>
-    regCapCp !== null
-      ? [0, ...REG_PLACEMENTS.filter(p => p.cp <= regCapCp).map(p => p.cp)]
-      : [0, ...REG_PLACEMENTS.map(p => p.cp)],
+    regCapCp!==null ? [0,...REG_PLACEMENTS.filter(p=>p.cp<=regCapCp).map(p=>p.cp)] : [0,...REG_PLACEMENTS.map(p=>p.cp)],
     [regCapCp]
   );
   const allowedICCPs = React.useMemo(() =>
-    icCapCp !== null
-      ? [0, ...IC_PLACEMENTS.filter(p => p.cp <= icCapCp).map(p => p.cp)]
-      : [0, ...IC_PLACEMENTS.map(p => p.cp)],
+    icCapCp!==null ? [0,...IC_PLACEMENTS.filter(p=>p.cp<=icCapCp).map(p=>p.cp)] : [0,...IC_PLACEMENTS.map(p=>p.cp)],
     [icCapCp]
   );
 
+  /* ── Combination builder with unified BFL/zero deduplication ── */
   const { combos, totalCount } = React.useMemo(() => {
-    const pCPs = [
-      ...playedRegData.map(p => p.cp),
-      ...playedICData.map(p => p.cp),
-    ];
+    const pCPs      = [...playedRegData.map(p=>p.cp), ...playedICData.map(p=>p.cp)];
     const regCombos = multisetCombos(allowedRegCPs, nUpcomingReg);
     const icCombos  = multisetCombos(allowedICCPs,  nUpcomingIC);
-
-    const seen = new Set();
-    const results = [];
+    const seen      = new Set();
+    const results   = [];
 
     for (const regC of regCombos) {
       for (const icC of icCombos) {
-        const allC = [...pCPs, ...regC, ...icC].sort((a, b) => b - a);
-        // Deduplicate by full sorted CP signature (e.g. [reg=80,ic=0] same outcome as [reg=0,ic=80] when both are 80cp)
-        const sig = allC.join(",");
-        if (seen.has(sig)) continue;
-        seen.add(sig);
-        const mSum = allC.slice(0, TOP_N).reduce((a, b) => a + b, 0);
-        const t = mSum + CUPS;
-        if (t >= minTotal) results.push({ regC, icC, mSum, total: t });
+        const allC = [...pCPs, ...regC, ...icC].sort((a,b)=>b-a);
+        const mSum = allC.slice(0,TOP_N).reduce((a,b)=>a+b,0);
+        const t    = mSum + localCP;
+        if (t < minTotal) continue;
+
+        // Build available pool: upcoming CPs that land in top-5
+        const top5vals  = allC.slice(0,TOP_N);
+        const availPool = [...top5vals];
+        for (const pc of pCPs) { const i=availPool.indexOf(pc); if(i!==-1) availPool.splice(i,1); }
+
+        // Tag each upcoming slot — highest CPs get priority; cp=0 never contributes
+        const upAll = [
+          ...regC.map((cp,j)=>({cp,src:'reg',j})),
+          ...icC.map((cp,j) =>({cp,src:'ic', j})),
+        ].sort((a,b)=>b.cp-a.cp);
+
+        const pool = [...availPool];
+        upAll.forEach(u => {
+          if (u.cp > 0) { const i=pool.indexOf(u.cp); if(i!==-1){ pool.splice(i,1); u.contributes=true; return; } }
+          u.contributes = false;
+        });
+
+        // Deduplicate: key = played signature + contributing upcoming by type+cp
+        const contribParts = upAll.filter(u=>u.contributes).map(u=>`${u.src}:${u.cp}`).sort();
+        const key = pCPs.slice().sort((a,b)=>b-a).join(',') + '||' + contribParts.join('|');
+        if (seen.has(key)) continue;
+        seen.add(key);
+
+        // Build display arrays: show=true → result chip; show=false → "—"
+        const regDisp = regC.map((cp,j) => ({ cp, show: !!(upAll.find(u=>u.src==='reg'&&u.j===j)?.contributes) }));
+        const icDisp  = icC.map( (cp,j) => ({ cp, show: !!(upAll.find(u=>u.src==='ic' &&u.j===j)?.contributes) }));
+
+        results.push({ regC: regDisp, icC: icDisp, mSum, total: t });
       }
     }
 
-    results.sort((a, b) => sortDir === "desc" ? b.total - a.total : a.total - b.total);
-    return { combos: results.slice(0, MAX_DISPLAY), totalCount: results.length };
-  }, [playedRegData, playedICData, nUpcomingReg, nUpcomingIC, allowedRegCPs, allowedICCPs, minTotal, sortDir]);
+    results.sort((a,b) => sortDir==="desc" ? b.total-a.total : a.total-b.total);
+    return { combos: results.slice(0,MAX_DISPLAY), totalCount: results.length };
+  }, [playedRegData, playedICData, nUpcomingReg, nUpcomingIC, allowedRegCPs, allowedICCPs, minTotal, sortDir, localCP]);
 
+  /* ── Export ── */
   const buildTableData = React.useCallback(() => {
     const headers = [
-      ...playedRegData.map((_, i) => `Played Reg ${i + 1}`),
-      ...playedICData.map((_, i)  => `Played IC ${i + 1}`),
-      ...Array.from({ length: nUpcomingReg }, (_, i) => `Upcoming Reg ${i + 1}`),
-      ...Array.from({ length: nUpcomingIC  }, (_, i) => `Upcoming IC ${i + 1}`),
+      ...playedRegData.map((_,i)=>`Played Reg ${i+1}`),
+      ...playedICData.map((_,i) =>`Played IC ${i+1}`),
+      ...Array.from({length:nUpcomingReg},(_,i)=>`Upcoming Reg ${i+1}`),
+      ...Array.from({length:nUpcomingIC}, (_,i)=>`Upcoming IC ${i+1}`),
       `Top-${TOP_N} Sum`, "Total CP",
     ];
     const rows = combos.map(row => [
-      ...playedRegData.map(p => `${p.label}(${p.cp})`),
-      ...playedICData.map(p  => `${p.label}(${p.cp})`),
-      ...row.regC.map(cp => cp === 0 ? "—(0)" : `${cpToLabel("reg", cp)}(${cp})`),
-      ...row.icC.map(cp  => cp === 0 ? "—(0)" : `${cpToLabel("ic",  cp)}(${cp})`),
+      ...playedRegData.map(p=>`${p.label}(${p.cp})`),
+      ...playedICData.map(p =>`${p.label}(${p.cp})`),
+      ...row.regC.map(({cp,show})=>show?`${cpToLabel("reg",cp)}(${cp})`:"—"),
+      ...row.icC.map( ({cp,show})=>show?`${cpToLabel("ic", cp)}(${cp})`:"—"),
       row.mSum, row.total,
     ]);
     return [headers, ...rows];
@@ -308,138 +612,101 @@ function App() {
 
   const downloadCSV = React.useCallback(() => {
     const data = buildTableData();
-    const csv = data.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a"); a.href = url; a.download = "cp-combinations.csv"; a.click();
+    const csv  = data.map(r=>r.map(v=>`"${v}"`).join(",")).join("\n");
+    const blob = new Blob([csv],{type:"text/csv"});
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a"); a.href=url; a.download="cp-combinations.csv"; a.click();
     URL.revokeObjectURL(url);
   }, [buildTableData]);
 
   const copyToClipboard = React.useCallback(async () => {
-    const data = buildTableData();
-    const text = data.map(r => r.join("\t")).join("\n");
+    const text = buildTableData().map(r=>r.join("\t")).join("\n");
     try { await navigator.clipboard.writeText(text); setCopyStatus("✓ Copied"); }
     catch { setCopyStatus("Failed"); }
-    setTimeout(() => setCopyStatus(""), 2200);
+    setTimeout(()=>setCopyStatus(""),2200);
   }, [buildTableData]);
 
-  const nUpcomingUnset = events.filter(e => e.status === "upcoming" && !e.placement).length;
+  const nUpcomingUnset = events.filter(e=>e.status==="upcoming"&&!e.placement).length;
 
   const selStyle = {
-    background: T.selBg, border: `1px solid ${T.selBorder}`,
-    borderRadius: 6, padding: "5px 9px", color: T.selColor, fontSize: 11, cursor: "pointer", outline: "none"
+    background:"var(--sel-bg)", border:"1px solid var(--sel-border)",
+    borderRadius:6, padding:"5px 9px", color:"var(--sel-color)", fontSize:11, cursor:"pointer", outline:"none"
   };
-  const th = { padding: "8px 12px", textAlign: "left", fontSize: 10, color: T.textMuted, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.07em", whiteSpace: "nowrap" };
-  const td = { padding: "6px 12px", verticalAlign: "middle" };
+  const th = {
+    padding:"8px 12px", textAlign:"left", fontSize:10, color:"var(--text-muted)",
+    fontWeight:500, textTransform:"uppercase", letterSpacing:"0.07em", whiteSpace:"nowrap"
+  };
+  const td = { padding:"6px 12px", verticalAlign:"middle" };
 
   return (
-    <div style={{ minHeight: "100vh", background: T.pageBg, fontFamily: "'IBM Plex Sans', sans-serif", color: T.text, padding: "24px 18px", maxWidth: 1080, margin: "0 auto", transition: "background 0.2s, color 0.2s" }}>
+    <div style={{ minHeight:"100vh", background:"var(--page-bg)", fontFamily:"'IBM Plex Sans', sans-serif", color:"var(--text-primary)", padding:"24px 18px", maxWidth:1080, margin:"0 auto" }}>
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-      {/* Header */}
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 18, gap: 12 }}>
+      {/* ── Header ── */}
+      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:16, gap:12 }}>
         <div>
-          <h1 style={{ margin: "0 0 4px", fontSize: 20, fontWeight: 600, color: T.text, letterSpacing: "-0.02em" }}>
+          <h1 style={{ margin:"0 0 3px", fontSize:20, fontWeight:600, color:"var(--text-primary)", letterSpacing:"-0.02em" }}>
             2026 Pokémon TCG CP Calculator
           </h1>
-          <p style={{ margin: "0 0 4px", fontSize: 11, fontStyle: "italic", color: T.textMuted }}>
-            {subtitle}
-          </p>
-          <p style={{ margin: 0, fontSize: 11, color: T.textMuted, lineHeight: 1.6 }}>
-            Top {TOP_N} major finishes count · +{CUPS} CP for maxed Challenges/Cups ·{" "}
-            <span style={{ color: "#6366f1" }}>Click type badge</span> to swap Regional ↔ IC ·{" "}
-            <span style={{ color: "#22c55e" }}>Click status badge</span> to toggle Played ↔ Upcoming
+          <p style={{ margin:"0 0 5px", fontSize:11, fontStyle:"italic", color:"var(--text-muted)" }}>{subtitle}</p>
+          <p style={{ margin:0, fontSize:11, color:"var(--text-muted)", lineHeight:1.9 }}>
+            Top {TOP_N} major finishes count (BFL) · +{localCP} CP for Challenges/Cups ·{" "}
+            Click <span className="hint-badge hint-badge-reg">🏆 Regional</span> or <span className="hint-badge hint-badge-ic">⚡ IC</span> to swap ·{" "}
+            Click <span className="hint-badge hint-badge-played">Played</span> or <span className="hint-badge hint-badge-upcoming">Upcoming</span> to toggle
           </p>
         </div>
-
-        {/* Top-right controls */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
-          {/* Dark/light toggle */}
-          <button onClick={() => setDark(d => !d)} title={dark ? "Switch to light mode" : "Switch to dark mode"}
-            style={{
-              background: dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)",
-              border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`,
-              borderRadius: 7, padding: "5px 10px", cursor: "pointer",
-              color: T.textSub, fontSize: 13, outline: "none", lineHeight: 1
-            }}>
-            {dark ? "☀️" : "🌙"}
+        <div style={{ display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
+          <button onClick={()=>setDark(d=>!d)} title={dark?"Switch to light mode":"Switch to dark mode"}
+            style={{ background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", borderRadius:8, padding:"9px 16px", cursor:"pointer", color:"var(--text-sub)", fontSize:20, outline:"none", lineHeight:1 }}>
+            {dark?"☀️":"🌙"}
           </button>
-
-          {/* Info icon */}
           <div className="tooltip-wrap">
-            <div style={{
-              width: 24, height: 24, borderRadius: "50%",
-              background: dark ? "rgba(255,255,255,0.07)" : "rgba(0,0,0,0.07)",
-              border: `1px solid ${dark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.15)"}`,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "default", color: T.textMuted, fontSize: 12, fontWeight: 600, userSelect: "none"
-            }}>ℹ</div>
+            <div style={{ width:38, height:38, borderRadius:"50%", background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", display:"flex", alignItems:"center", justifyContent:"center", cursor:"default", color:"var(--text-muted)", fontSize:17, fontWeight:700, userSelect:"none" }}>ℹ</div>
             <div className="tooltip-box">
-              <strong style={{ color: dark ? "#e2e8f0" : "#0f172a", display: "block", marginBottom: 6 }}>How to use</strong>
-              Add events using <em>+ Add Event Slot</em>. Toggle each event between <strong>Regional</strong> and <strong>IC</strong>, and between <strong>Played</strong> and <strong>Upcoming</strong>. For played events, click your finish to lock it in — these appear as fixed columns in the table below.<br /><br />
-              The <strong>Remaining Combinations</strong> table enumerates every possible finish at your upcoming events and shows which combinations reach your Min CP threshold. A "—" means no points scored at that event. Use the exclusion dropdowns to hide unrealistic deep runs.
+              <strong style={{ color:"var(--text-primary)", display:"block", marginBottom:6 }}>How to use</strong>
+              Add events using <em>+ Add Event Slot</em>. Toggle between <strong>Regional</strong> and <strong>IC</strong> (your majors), and <strong>Played</strong> / <strong>Upcoming</strong>. For played events, click a finish to lock it in.<br /><br />
+              The <strong>Remaining Combinations</strong> table enumerates every finish at your upcoming majors. "—" means that slot doesn't affect your total (0 pts or outside top-{TOP_N}). Use the <em>Excl.</em> dropdowns to hide unrealistic deep runs.<br /><br />
+              Use <strong>⚙ Edit Challenges / Cups CP</strong> to set your locals total.
             </div>
           </div>
         </div>
       </div>
 
-      {/* Event rows */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 6, marginBottom: 16 }}>
+      {/* ── Locals Editor ── */}
+      <LocalsEditor
+        challengeSlots={challengeSlots} setChallengeSlots={setChallengeSlots}
+        cupSlots={cupSlots} setCupSlots={setCupSlots} localCP={localCP}
+      />
+
+      {/* ── Event rows ── */}
+      <div style={{ display:"flex", flexDirection:"column", gap:6, marginBottom:16 }}>
         {events.map((ev, idx) => {
           const placements = getPlacements(ev.type);
-          const isPlayed = ev.status === "played";
+          const isPlayed   = ev.status === "played";
           return (
-            <div key={ev.id} style={{
-              background: T.cardBg,
-              border: `1px solid ${isPlayed ? T.cardBorderPlayed : T.cardBorderUpcoming}`,
-              borderRadius: 9, padding: "8px 13px", transition: "background 0.2s",
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 7 }}>
-                <span style={{ fontSize: 11, color: T.textDim, fontFamily: "'IBM Plex Mono', monospace", minWidth: 16 }}>{idx + 1}</span>
-
-                <button onClick={() => toggleType(ev.id)} title="Swap Regional ↔ IC"
-                  style={{
-                    background: ev.type === "ic" ? "rgba(139,92,246,0.18)" : "rgba(59,130,246,0.12)",
-                    border: `1px solid ${ev.type === "ic" ? "rgba(139,92,246,0.45)" : "rgba(59,130,246,0.35)"}`,
-                    color: ev.type === "ic" ? "#c4b5fd" : "#93c5fd",
-                    borderRadius: 5, padding: "2px 8px", fontSize: 10,
-                    cursor: "pointer", fontWeight: 500, letterSpacing: "0.04em", outline: "none", transition: "all 0.14s"
-                  }}>{ev.type === "ic" ? "⚡ IC" : "🏆 Regional"}</button>
-
-                <button onClick={() => toggleStatus(ev.id)}
-                  style={{
-                    background: isPlayed ? "rgba(100,116,139,0.12)" : "rgba(34,197,94,0.1)",
-                    border: `1px solid ${isPlayed ? "rgba(100,116,139,0.3)" : "rgba(34,197,94,0.3)"}`,
-                    color: isPlayed ? "#64748b" : "#4ade80",
-                    borderRadius: 5, padding: "2px 8px", fontSize: 10,
-                    cursor: "pointer", fontWeight: 500, letterSpacing: "0.04em", outline: "none", transition: "all 0.14s"
-                  }}>{isPlayed ? "Played" : "Upcoming"}</button>
-
+            <div key={ev.id} style={{ background:"var(--card-bg)", border:`1px solid ${isPlayed?"var(--card-border-played)":"var(--card-border-upcoming)"}`, borderRadius:9, padding:"8px 13px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
+                <span style={{ fontSize:11, color:"var(--btn-number-color)", fontFamily:"'IBM Plex Mono', monospace", minWidth:16 }}>{idx+1}</span>
+                <button onClick={()=>toggleType(ev.id)} title="Swap Regional ↔ IC"
+                  style={{ background:ev.type==="ic"?"var(--badge-ic-bg)":"var(--badge-reg-bg)", border:`1px solid ${ev.type==="ic"?"var(--badge-ic-border)":"var(--badge-reg-border)"}`, color:ev.type==="ic"?"var(--badge-ic-color)":"var(--badge-reg-color)", borderRadius:5, padding:"2px 8px", fontSize:10, cursor:"pointer", fontWeight:600, letterSpacing:"0.04em", outline:"none" }}>
+                  {ev.type==="ic"?"⚡ IC":"🏆 Regional"}
+                </button>
+                <button onClick={()=>toggleStatus(ev.id)}
+                  style={{ background:isPlayed?"var(--badge-played-bg)":"var(--badge-upcoming-bg)", border:`1px solid ${isPlayed?"var(--badge-played-border)":"var(--badge-upcoming-border)"}`, color:isPlayed?"var(--badge-played-color)":"var(--badge-upcoming-color)", borderRadius:5, padding:"2px 8px", fontSize:10, cursor:"pointer", fontWeight:600, letterSpacing:"0.04em", outline:"none" }}>
+                  {isPlayed?"Played":"Upcoming"}
+                </button>
                 {events.length > 1 && (
-                  <button onClick={() => removeEvent(ev.id)}
-                    style={{ marginLeft: "auto", background: "none", border: "none", color: T.textDim, cursor: "pointer", fontSize: 14, padding: "0 2px", outline: "none" }}
-                    title="Remove event">×</button>
+                  <button onClick={()=>removeEvent(ev.id)} style={{ marginLeft:"auto", background:"none", border:"none", color:"var(--text-dim)", cursor:"pointer", fontSize:14, padding:"0 2px", outline:"none" }} title="Remove event">×</button>
                 )}
               </div>
-
-              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+              <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
                 {placements.map(p => {
                   const active = ev.placement === p.label;
                   return (
-                    <button key={p.label} onClick={() => togglePlacement(ev.id, p.label)}
-                      style={{
-                        background: active ? "rgba(99,102,241,0.22)" : T.btnInactiveBg,
-                        border: `1px solid ${active ? "#6366f1" : T.btnInactiveBorder}`,
-                        borderRadius: 6, padding: "3px 9px", cursor: "pointer",
-                        color: active ? "#a5b4fc" : T.btnInactiveColor,
-                        fontFamily: "'IBM Plex Mono', monospace", fontSize: 11,
-                        transition: "all 0.11s",
-                        display: "inline-flex", flexDirection: "column", alignItems: "center",
-                        outline: "none",
-                        boxShadow: active ? "0 0 0 2px rgba(99,102,241,0.18)" : "none"
-                      }}>
-                      <span style={{ fontWeight: active ? 600 : 400, lineHeight: 1.3 }}>{p.label}</span>
-                      <span style={{ fontSize: 9, color: active ? "#818cf8" : T.cpLabelColor, lineHeight: 1.2 }}>{p.cp}</span>
+                    <button key={p.label} onClick={()=>togglePlacement(ev.id,p.label)}
+                      style={{ background:active?"rgba(99,102,241,0.22)":"var(--btn-inactive-bg)", border:`1px solid ${active?"#6366f1":"var(--btn-inactive-border)"}`, borderRadius:6, padding:"3px 9px", cursor:"pointer", color:active?"var(--btn-active-color)":"var(--btn-inactive-color)", fontFamily:"'IBM Plex Mono', monospace", fontSize:11, display:"inline-flex", flexDirection:"column", alignItems:"center", outline:"none", boxShadow:active?"0 0 0 2px rgba(99,102,241,0.18)":"none", transition:"all 0.11s" }}>
+                      <span style={{ fontWeight:active?700:400, lineHeight:1.3 }}>{p.label}</span>
+                      <span style={{ fontSize:9, color:active?"var(--btn-cp-active)":"var(--btn-cp-inactive)", lineHeight:1.2 }}>{p.cp}</span>
                     </button>
                   );
                 })}
@@ -447,218 +714,192 @@ function App() {
             </div>
           );
         })}
-
-        {events.length < 10 && (
-          <button onClick={addEvent}
-            style={{
-              background: T.addBtnBg, border: `1px dashed ${T.addBtnBorder}`,
-              borderRadius: 9, padding: "7px", color: T.addBtnColor, cursor: "pointer",
-              fontSize: 12, outline: "none", letterSpacing: "0.04em"
-            }}>+ Add Event Slot</button>
+        {events.length < 12 && (
+          <button onClick={addEvent} style={{ background:"var(--add-btn-bg)", border:"1px dashed var(--add-btn-border)", borderRadius:9, padding:"7px", color:"var(--add-btn-color)", cursor:"pointer", fontSize:12, outline:"none", letterSpacing:"0.04em" }}>
+            + Add Event Slot
+          </button>
         )}
       </div>
 
-      {/* Result panel */}
-      <div style={{
-        background: ti ? ti.bg : T.resultPanelDefault,
-        border: `1px solid ${ti ? ti.color + "40" : T.resultPanelBorder}`,
-        borderRadius: 11, padding: "14px 18px", marginBottom: 20, transition: "all 0.3s"
-      }}>
-        {allSelected ? (
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+      {/* ── Result panel (always visible) ── */}
+      <div style={{ background:topBg||"rgba(255,255,255,0.02)", border:`1px solid ${topColor?topColor+"40":"var(--card-border)"}`, borderRadius:11, padding:"14px 18px", marginBottom:20 }}>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+          <div>
+            <div style={{ fontSize:10, color:"var(--text-muted)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>
+              Total Championship Points{!allSelected?" — partial":""}
+            </div>
+            <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
+              <span style={{ fontSize:38, fontWeight:600, fontFamily:"'IBM Plex Mono', monospace", color:topColor||"var(--text-primary)", letterSpacing:"-0.03em", lineHeight:1 }}>
+                {totalCP}
+              </span>
+              <span style={{ fontSize:11, color:"var(--sub-total-color)" }}>{top5Sum} majors + {localCP} locals</span>
+            </div>
+            {!allSelected && (
+              <div style={{ fontSize:10, color:"#b45309", marginTop:5 }}>
+                ⚠ {nUnselected} event{nUnselected!==1?"s":""} still {nUnselected===1?"needs":"need"} a placement selected
+              </div>
+            )}
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+            {THRESHOLDS.map(t => {
+              const col = THRESH_COLORS[t];
+              const hit = totalCP >= t;
+              return (
+                <div key={t} style={{ display:"flex", alignItems:"center", gap:6, fontSize:11, opacity:hit?1:0.35 }}>
+                  <div style={{ width:6, height:6, borderRadius:"50%", background:hit?col:"var(--text-dim)" }} />
+                  <span style={{ color:hit?col:"var(--text-muted)", fontFamily:"'IBM Plex Mono', monospace" }}>
+                    {t} {hit?"✓":`(need ${t-totalCP} more)`}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Sticky controls bar ── */}
+      <div className="controls-bar" ref={controlsRef}>
+        <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
+          <div>
+            <div style={{ fontSize:13, fontWeight:600, color:"var(--text-primary)", marginBottom:1 }}>Remaining Combinations</div>
+            <div style={{ fontSize:11, color:"var(--text-muted)" }}>
+              {nUpcomingReg} upcoming reg · {nUpcomingIC} upcoming IC ·{" "}
+              {totalCount>MAX_DISPLAY ? `showing top ${MAX_DISPLAY} of ${totalCount.toLocaleString()}` : `${totalCount} unique combination${totalCount!==1?"s":""}`}
+            </div>
+            {nUpcomingUnset > 0 && (
+              <div style={{ fontSize:10, color:"#b45309", marginTop:2 }}>
+                ⚠ {nUpcomingUnset} upcoming event{nUpcomingUnset!==1?"s":""} have no placement selected — those slots are still enumerated below
+              </div>
+            )}
+          </div>
+          <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"flex-end" }}>
             <div>
-              <div style={{ fontSize: 10, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Total Championship Points</div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
-                <span style={{ fontSize: 38, fontWeight: 600, fontFamily: "'IBM Plex Mono', monospace", color: ti?.color ?? T.text, letterSpacing: "-0.03em", lineHeight: 1 }}>
-                  {totalCP}
-                </span>
-                <span style={{ fontSize: 11, color: T.subTotal }}>{top5Sum} majors + {CUPS} cups</span>
+              <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Excl. Reg better than</div>
+              <select value={regCapCp??""} onChange={e=>setRegCapCp(e.target.value===""?null:Number(e.target.value))} style={selStyle}>
+                <option value="">None</option>
+                {REG_PLACEMENTS.slice(0,-1).map(p=><option key={p.label} value={p.cp}>{p.label} ({p.cp} CP)</option>)}
+              </select>
+            </div>
+            <div>
+              <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Excl. IC better than</div>
+              <select value={icCapCp??""} onChange={e=>setIcCapCp(e.target.value===""?null:Number(e.target.value))} style={selStyle}>
+                <option value="">None</option>
+                {IC_PLACEMENTS.slice(0,-1).map(p=><option key={p.label} value={p.cp}>{p.label} ({p.cp} CP)</option>)}
+              </select>
+            </div>
+            <div>
+              <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Min CP</div>
+              <select value={minTotal} onChange={e=>setMinTotal(Number(e.target.value))} style={selStyle}>
+                {MIN_CP_OPTIONS.map(v=><option key={v} value={v}>{v}</option>)}
+              </select>
+            </div>
+            <div>
+              <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Sort</div>
+              <select value={sortDir} onChange={e=>setSortDir(e.target.value)} style={selStyle}>
+                <option value="desc">High → Low</option>
+                <option value="asc">Low → High</option>
+              </select>
+            </div>
+            <div>
+              <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Export</div>
+              <div style={{ display:"flex", gap:4 }}>
+                <button onClick={copyToClipboard} style={{ background:copyStatus?"rgba(34,197,94,0.14)":"var(--add-btn-bg)", border:`1px solid ${copyStatus?"rgba(34,197,94,0.35)":"var(--card-border)"}`, borderRadius:6, padding:"5px 10px", cursor:"pointer", color:copyStatus?"var(--thresh-800)":"var(--text-sub)", fontSize:11, outline:"none", minWidth:72, textAlign:"center", transition:"all 0.18s" }}>
+                  {copyStatus||"📋 Copy"}
+                </button>
+                <button onClick={downloadCSV} style={{ background:"var(--add-btn-bg)", border:"1px solid var(--card-border)", borderRadius:6, padding:"5px 10px", cursor:"pointer", color:"var(--text-sub)", fontSize:11, outline:"none" }}>⬇ CSV</button>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              {THRESHOLDS.map(t => {
-                const tInfo = getThresholdInfo(t);
-                const hit = totalCP >= t;
-                return (
-                  <div key={t} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 11, opacity: hit ? 1 : 0.3 }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: hit ? tInfo?.color : T.textDim }} />
-                    <span style={{ color: hit ? tInfo?.color : T.textMuted, fontFamily: "'IBM Plex Mono', monospace" }}>
-                      {t} {hit ? "✓" : `(need ${t - totalCP} more)`}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
           </div>
-        ) : (
-          <div style={{ color: T.resultTextEmpty, fontSize: 12, textAlign: "center" }}>
-            {events.filter(e => !e.placement).length} event{events.filter(e => !e.placement).length !== 1 ? "s" : ""} still need a placement selected
-          </div>
-        )}
-      </div>
-
-      {/* Table controls */}
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 8 }}>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: T.text, marginBottom: 1 }}>Remaining Combinations</div>
-          <div style={{ fontSize: 11, color: T.textMuted }}>
-            {nUpcomingReg} upcoming reg · {nUpcomingIC} upcoming IC ·{" "}
-            {totalCount > MAX_DISPLAY
-              ? `showing top ${MAX_DISPLAY} of ${totalCount.toLocaleString()}`
-              : `${totalCount} unique combination${totalCount !== 1 ? "s" : ""}`}
-          </div>
-          {nUpcomingUnset > 0 && (
-            <div style={{ fontSize: 10, color: "#b45309", marginTop: 2 }}>
-              ⚠ {nUpcomingUnset} upcoming event{nUpcomingUnset !== 1 ? "s" : ""} have no placement selected above — those slots are still enumerated in the table
-            </div>
-          )}
         </div>
-
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "flex-end" }}>
-          <div>
-            <div style={{ fontSize: 10, color: T.textMuted, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.06em" }}>Excl. Reg better than</div>
-            <select value={regCapCp ?? ""} onChange={e => setRegCapCp(e.target.value === "" ? null : Number(e.target.value))} style={selStyle}>
-              <option value="">None</option>
-              {REG_PLACEMENTS.slice(0, -1).map(p => (<option key={p.label} value={p.cp}>{p.label} ({p.cp} CP)</option>))}
-            </select>
-          </div>
-          <div>
-            <div style={{ fontSize: 10, color: T.textMuted, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.06em" }}>Excl. IC better than</div>
-            <select value={icCapCp ?? ""} onChange={e => setIcCapCp(e.target.value === "" ? null : Number(e.target.value))} style={selStyle}>
-              <option value="">None</option>
-              {IC_PLACEMENTS.slice(0, -1).map(p => (<option key={p.label} value={p.cp}>{p.label} ({p.cp} CP)</option>))}
-            </select>
-          </div>
-          <div>
-            <div style={{ fontSize: 10, color: T.textMuted, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.06em" }}>Min CP</div>
-            <select value={minTotal} onChange={e => setMinTotal(Number(e.target.value))} style={selStyle}>
-              {[580,600,620,640,660,680,700,720,740,760,780,800].map(v => <option key={v} value={v}>{v}</option>)}
-            </select>
-          </div>
-          <div>
-            <div style={{ fontSize: 10, color: T.textMuted, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.06em" }}>Sort</div>
-            <select value={sortDir} onChange={e => setSortDir(e.target.value)} style={selStyle}>
-              <option value="desc">High → Low</option>
-              <option value="asc">Low → High</option>
-            </select>
-          </div>
-          <div>
-            <div style={{ fontSize: 10, color: T.textMuted, marginBottom: 3, textTransform: "uppercase", letterSpacing: "0.06em" }}>Export</div>
-            <div style={{ display: "flex", gap: 4 }}>
-              <button onClick={copyToClipboard} style={{
-                background: copyStatus ? "rgba(34,197,94,0.14)" : (dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
-                border: `1px solid ${copyStatus ? "rgba(34,197,94,0.35)" : T.cardBorder}`,
-                borderRadius: 6, padding: "5px 10px", cursor: "pointer",
-                color: copyStatus ? "#4ade80" : T.textSub, fontSize: 11, outline: "none",
-                transition: "all 0.18s", minWidth: 72, textAlign: "center"
-              }}>{copyStatus || "📋 Copy"}</button>
-              <button onClick={downloadCSV} style={{
-                background: dark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-                border: `1px solid ${T.cardBorder}`,
-                borderRadius: 6, padding: "5px 10px", cursor: "pointer",
-                color: T.textSub, fontSize: 11, outline: "none"
-              }}>⬇ CSV</button>
+        {/* Legend */}
+        <div style={{ display:"flex", gap:10, marginTop:8, flexWrap:"wrap", alignItems:"center" }}>
+          {THRESHOLDS.map(t=>(
+            <div key={t} style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
+              <div style={{ width:8, height:8, borderRadius:2, background:THRESH_COLORS[t] }} />
+              <span style={{ color:"var(--text-muted)" }}>{t}+</span>
             </div>
+          ))}
+          <div style={{ width:1, height:12, background:"var(--divider-color)" }} />
+          <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
+            <div style={{ width:8, height:8, borderRadius:2, background:"var(--chip-played-bg)", border:"1px solid var(--chip-played-border)" }} />
+            <span style={{ color:"var(--text-muted)" }}>Played (fixed)</span>
+          </div>
+          <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
+            <div style={{ width:8, height:8, borderRadius:2, background:"var(--chip-reg-bg)", border:"1px solid var(--chip-reg-border)" }} />
+            <span style={{ color:"var(--text-muted)" }}>Upcoming Reg</span>
+          </div>
+          <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
+            <div style={{ width:8, height:8, borderRadius:2, background:"var(--chip-ic-bg)", border:"1px solid var(--chip-ic-border)" }} />
+            <span style={{ color:"var(--text-muted)" }}>Upcoming IC</span>
+          </div>
+          <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
+            <div style={{ width:8, height:8, borderRadius:2, background:"var(--chip-dash-bg)", border:"1px solid var(--chip-dash-border)" }} />
+            <span style={{ color:"var(--text-muted)" }}>— (0 pts or outside top {TOP_N})</span>
           </div>
         </div>
       </div>
 
-      {/* Legend */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 8, flexWrap: "wrap", alignItems: "center" }}>
-        {[{ color: "#4ade80", label: "760+" },{ color: "#86efac", label: "740+" },{ color: "#facc15", label: "720+" },{ color: "#fbbf24", label: "700+" },{ color: "#fb923c", label: "680+" }].map(({ color, label }) => (
-          <div key={label} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10 }}>
-            <div style={{ width: 8, height: 8, borderRadius: 2, background: color }} />
-            <span style={{ color: T.textMuted }}>{label}</span>
-          </div>
-        ))}
-        <div style={{ width: 1, height: 12, background: T.divider }} />
-        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10 }}>
-          <div style={{ width: 8, height: 8, borderRadius: 2, background: dark ? "rgba(148,163,184,0.1)" : "rgba(0,0,0,0.08)", border: `1px solid ${dark ? "rgba(148,163,184,0.22)" : "rgba(0,0,0,0.15)"}` }} />
-          <span style={{ color: T.textMuted }}>Played (fixed)</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10 }}>
-          <div style={{ width: 8, height: 8, borderRadius: 2, background: "rgba(99,102,241,0.18)", border: "1px solid rgba(99,102,241,0.4)" }} />
-          <span style={{ color: T.textMuted }}>Upcoming Reg</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10 }}>
-          <div style={{ width: 8, height: 8, borderRadius: 2, background: "rgba(139,92,246,0.18)", border: "1px solid rgba(139,92,246,0.4)" }} />
-          <span style={{ color: T.textMuted }}>Upcoming IC</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10 }}>
-          <div style={{ width: 8, height: 8, borderRadius: 2, background: T.addBtnBg, border: `1px solid ${T.addBtnBorder}` }} />
-          <span style={{ color: T.textMuted }}>— (0 points scored)</span>
-        </div>
-      </div>
-
-      {/* Table */}
-      <div style={{ overflowX: "auto", borderRadius: 10, border: `1px solid ${T.cardBorder}` }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+      {/* ── Table ── */}
+      <div className="table-scroll-wrap">
+        <table className="combo-table" style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
           <thead>
-            <tr style={{ background: T.tableHead, borderBottom: `1px solid ${T.tableHeadBorder}` }}>
-              {playedRegData.map((_, i) => (
-                <th key={`prh${i}`} style={{ ...th, color: T.textMuted, background: T.tableDark }}>Played Reg {i + 1}</th>
+            <tr style={{ borderBottom:"1px solid var(--table-head-border)" }}>
+              {playedRegData.map((_,i)=>(
+                <th key={`prh${i}`} style={{...th, background:"var(--th-played-bg)"}}>Played Reg {i+1}</th>
               ))}
-              {playedICData.map((_, i) => (
-                <th key={`pich${i}`} style={{ ...th, color: T.textMuted, background: T.tableDark, borderRight: i === playedICData.length - 1 ? `2px solid ${T.tableDivider}` : undefined }}>Played IC {i + 1}</th>
+              {playedICData.map((_,i)=>(
+                <th key={`pich${i}`} style={{...th, background:"var(--th-played-bg)", borderRight:i===playedICData.length-1?"2px solid var(--table-divider)":undefined}}>Played IC {i+1}</th>
               ))}
-              {playedRegData.length > 0 && playedICData.length === 0 && nUpcomingReg + nUpcomingIC > 0 && (
-                <th style={{ ...th, padding: 0, width: 0, borderRight: `2px solid ${T.tableDivider}` }} />
+              {playedRegData.length>0 && playedICData.length===0 && nUpcoming>0 && (
+                <th style={{...th, padding:0, width:0, borderRight:"2px solid var(--table-divider)"}} />
               )}
-              {Array.from({ length: nUpcomingReg }, (_, i) => (
-                <th key={`urh${i}`} style={{ ...th, color: "#93c5fd" }}>Upcoming Reg {i + 1}</th>
+              {Array.from({length:nUpcomingReg},(_,i)=>(
+                <th key={`urh${i}`} style={{...th, color:"var(--th-upcoming-reg)"}}>Upcoming Reg {i+1}</th>
               ))}
-              {Array.from({ length: nUpcomingIC }, (_, i) => (
-                <th key={`uich${i}`} style={{ ...th, color: "#c4b5fd" }}>Upcoming IC {i + 1}</th>
+              {Array.from({length:nUpcomingIC},(_,i)=>(
+                <th key={`uich${i}`} style={{...th, color:"var(--th-upcoming-ic)"}}>Upcoming IC {i+1}</th>
               ))}
               <th style={th}>Top-{TOP_N} Sum</th>
               <th style={th}>Total CP</th>
             </tr>
           </thead>
           <tbody>
-            {combos.map((row, i) => {
-              const rowTI = getThresholdInfo(row.total);
+            {combos.map((row,i)=>{
+              const rowColor = getThresholdColor(row.total);
+              const rowBg    = getThresholdBg(row.total);
               return (
-                <tr key={i} style={{ borderBottom: `1px solid ${T.tableRowBorder}`, background: rowTI ? rowTI.bg : "transparent" }}>
-                  {playedRegData.map((p, j) => (
-                    <td key={`pr${j}`} style={{ ...td, background: T.tableDark }}>
-                      <Chip label={p.label} cp={p.cp} variant="played-reg" dark={dark} />
+                <tr key={i} style={{ borderBottom:"1px solid var(--table-row-border)", background:rowBg||"transparent" }}>
+                  {playedRegData.map((p,j)=>(
+                    <td key={`pr${j}`} style={{...td, background:"var(--table-dark-bg)"}}>
+                      <Chip label={p.label} cp={p.cp} variant="played-reg" />
                     </td>
                   ))}
-                  {playedICData.map((p, j) => (
-                    <td key={`pic${j}`} style={{ ...td, background: T.tableDark, borderRight: j === playedICData.length - 1 ? `2px solid ${T.tableDivider}` : undefined }}>
-                      <Chip label={p.label} cp={p.cp} variant="played-ic" dark={dark} />
+                  {playedICData.map((p,j)=>(
+                    <td key={`pic${j}`} style={{...td, background:"var(--table-dark-bg)", borderRight:j===playedICData.length-1?"2px solid var(--table-divider)":undefined}}>
+                      <Chip label={p.label} cp={p.cp} variant="played-ic" />
                     </td>
                   ))}
-                  {playedRegData.length > 0 && playedICData.length === 0 && nUpcomingReg + nUpcomingIC > 0 && (
-                    <td style={{ padding: 0, width: 0, borderRight: `2px solid ${T.tableDivider}` }} />
+                  {playedRegData.length>0 && playedICData.length===0 && nUpcoming>0 && (
+                    <td style={{padding:0, width:0, borderRight:"2px solid var(--table-divider)"}} />
                   )}
-                  {row.regC.map((cp, j) => (
-                    <td key={`ur${j}`} style={td}>
-                      <Chip label={cpToLabel("reg", cp)} cp={cp} variant="upcoming-reg" dark={dark} />
-                    </td>
+                  {row.regC.map(({cp,show},j)=>(
+                    <td key={`ur${j}`} style={td}>{show ? <Chip label={cpToLabel("reg",cp)} cp={cp} variant="upcoming-reg" /> : <DashChip />}</td>
                   ))}
-                  {row.icC.map((cp, j) => (
-                    <td key={`uic${j}`} style={td}>
-                      <Chip label={cpToLabel("ic", cp)} cp={cp} variant="upcoming-ic" dark={dark} />
-                    </td>
+                  {row.icC.map(({cp,show},j)=>(
+                    <td key={`uic${j}`} style={td}>{show ? <Chip label={cpToLabel("ic",cp)} cp={cp} variant="upcoming-ic" /> : <DashChip />}</td>
                   ))}
-                  <td style={{ ...td, fontFamily: "'IBM Plex Mono', monospace", color: T.top5SumColor, fontSize: 11, fontWeight: 500 }}>{row.mSum}</td>
+                  <td style={{...td, fontFamily:"'IBM Plex Mono', monospace", color:"var(--text-top5sum)", fontSize:11, fontWeight:500}}>{row.mSum}</td>
                   <td style={td}>
-                    <span style={{
-                      fontFamily: "'IBM Plex Mono', monospace", fontWeight: 600, fontSize: 13,
-                      color: rowTI ? rowTI.color : T.textMuted,
-                      background: rowTI ? `${rowTI.color}14` : (dark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.04)"),
-                      border: `1px solid ${rowTI ? rowTI.color + "28" : T.cardBorder}`,
-                      borderRadius: 5, padding: "2px 9px"
-                    }}>{row.total}</span>
+                    <span style={{ fontFamily:"'IBM Plex Mono', monospace", fontWeight:700, fontSize:13, color:rowColor||"var(--total-cp-unmet)", background:rowBg?rowColor+"18":"var(--btn-inactive-bg)", border:`1px solid ${rowColor?rowColor+"30":"var(--card-border)"}`, borderRadius:5, padding:"2px 9px" }}>
+                      {row.total}
+                    </span>
                   </td>
                 </tr>
               );
             })}
-            {combos.length === 0 && (
+            {combos.length===0 && (
               <tr>
-                <td colSpan={playedRegData.length + playedICData.length + nUpcomingReg + nUpcomingIC + 2}
-                  style={{ padding: 28, textAlign: "center", color: T.noDataColor }}>
+                <td colSpan={playedRegData.length+playedICData.length+nUpcomingReg+nUpcomingIC+2} style={{ padding:28, textAlign:"center", color:"var(--no-data-color)" }}>
                   No combinations meet the current filters.
                 </td>
               </tr>
@@ -668,44 +909,11 @@ function App() {
       </div>
 
       {totalCount > MAX_DISPLAY && (
-        <div style={{ marginTop: 8, fontSize: 11, color: T.textMuted, textAlign: "center" }}>
+        <div style={{ marginTop:8, fontSize:11, color:"var(--text-muted)", textAlign:"center" }}>
           Showing top {MAX_DISPLAY} of {totalCount.toLocaleString()} — raise Min CP or add exclusions to narrow results
         </div>
       )}
     </div>
-  );
-}
-
-function Chip({ label, cp, variant, dark }) {
-  if (cp === 0) {
-    return (
-      <span style={{
-        display: "inline-flex", alignItems: "center",
-        background: dark ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.04)",
-        border: `1px solid ${dark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.08)"}`,
-        borderRadius: 5, padding: "2px 9px",
-        fontFamily: "'IBM Plex Mono', monospace",
-        color: dark ? "#2d3748" : "#94a3b8", whiteSpace: "nowrap", fontSize: 11, fontStyle: "italic"
-      }}>—</span>
-    );
-  }
-  const styles = {
-    "played-reg":   { bg: dark ? "rgba(148,163,184,0.08)" : "rgba(0,0,0,0.06)", border: dark ? "rgba(148,163,184,0.2)" : "rgba(0,0,0,0.12)", color: dark ? "#475569" : "#64748b", cpColor: "#60a5fa" },
-    "played-ic":    { bg: dark ? "rgba(148,163,184,0.08)" : "rgba(0,0,0,0.06)", border: dark ? "rgba(148,163,184,0.2)" : "rgba(0,0,0,0.12)", color: dark ? "#475569" : "#64748b", cpColor: "#60a5fa" },
-    "upcoming-reg": { bg: "rgba(99,102,241,0.12)",  border: "rgba(99,102,241,0.3)",  color: "#a5b4fc", cpColor: "#818cf8" },
-    "upcoming-ic":  { bg: "rgba(139,92,246,0.12)",  border: "rgba(139,92,246,0.3)",  color: "#c4b5fd", cpColor: "#a78bfa" },
-  };
-  const s = styles[variant] || styles["upcoming-reg"];
-  return (
-    <span style={{
-      display: "inline-flex", alignItems: "center", gap: 3,
-      background: s.bg, border: `1px solid ${s.border}`,
-      borderRadius: 5, padding: "2px 7px",
-      fontFamily: "'IBM Plex Mono', monospace",
-      color: s.color, whiteSpace: "nowrap", fontSize: 11
-    }}>
-      {label} <span style={{ color: s.cpColor, fontSize: 9, fontWeight: 600 }}>({cp})</span>
-    </span>
   );
 }
 
