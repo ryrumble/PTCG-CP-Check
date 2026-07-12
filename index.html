@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pokemon CP Calculator</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -202,6 +203,25 @@
     .hint-badge-ic       { background: var(--badge-ic-bg);       border-color: var(--badge-ic-border);       color: var(--badge-ic-color);       }
     .hint-badge-played   { background: var(--badge-played-bg);   border-color: var(--badge-played-border);   color: var(--badge-played-color);   }
     .hint-badge-upcoming { background: var(--badge-upcoming-bg); border-color: var(--badge-upcoming-border); color: var(--badge-upcoming-color); }
+
+    @media (max-width: 640px) {
+      body { font-size: 14px; }
+      .header-row { flex-direction: column; align-items: flex-start; }
+      .header-buttons { width: 100%; justify-content: flex-end; }
+      .totals-row { flex-direction: column; }
+      .totals-row > div:first-child { width: 100%; }
+      .controls-inner { flex-direction: column; align-items: stretch; }
+      .controls-filters { width: 100%; }
+      .controls-filters > div { flex: 1 1 100%; min-width: 0; }
+      .locals-inner { flex-direction: column; }
+      .locals-inner > div { min-width: 0 !important; flex: 1 1 auto !important; }
+      .locals-editor-btn { flex-wrap: wrap; gap: 6px; }
+      .event-placements { gap: 3px; }
+      .event-placements button { padding: 3px 6px; font-size: 10px; }
+      .event-header-row { flex-wrap: wrap; gap: 4px; }
+      .tooltip-box { right: auto; left: 0; width: 260px; }
+      .table-scroll-wrap { max-height: 60vh; }
+    }
   </style>
 </head>
 <body class="dark">
@@ -358,7 +378,7 @@ function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots
 
   return (
     <div style={{ marginBottom: 12, background: "var(--card-bg)", border: "1px solid var(--card-border)", borderRadius: 9, overflow: "hidden" }}>
-      <button onClick={() => setOpen(o => !o)} style={{
+      <button onClick={() => setOpen(o => !o)} className="locals-editor-btn" style={{
         width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
         background: "none", border: "none", padding: "10px 14px", cursor: "pointer",
         color: "var(--text-primary)", outline: "none"
@@ -376,7 +396,7 @@ function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots
 
       {open && (
         <div style={{ padding: "0 14px 14px", borderTop: "1px solid var(--card-border)" }}>
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingTop: 12 }}>
+          <div className="locals-inner" style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingTop: 12 }}>
             <div style={{ flex: "1 1 240px", minWidth: 240 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
                 <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text-primary)" }}>
@@ -621,7 +641,7 @@ function App() {
     <div style={{ minHeight:"100vh", background:"var(--page-bg)", fontFamily:"'IBM Plex Sans', sans-serif", color:"var(--text-primary)", padding:"24px 18px", maxWidth:1080, margin:"0 auto" }}>
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-      <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:16, gap:12 }}>
+      <div className="header-row" style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:16, gap:12 }}>
         <div>
           <h1 style={{ margin:"0 0 3px", fontSize:20, fontWeight:600, color:"var(--text-primary)", letterSpacing:"-0.02em" }}>
             2026 Pokemon TCG CP Calculator
@@ -633,7 +653,7 @@ function App() {
             Click <span className="hint-badge hint-badge-played">Played</span> or <span className="hint-badge hint-badge-upcoming">Upcoming</span> to toggle
           </p>
         </div>
-        <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+        <div className="header-buttons" style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
           <button onClick={resetState} title="Reset to defaults"
             style={{ background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", borderRadius:8, padding:"9px 14px", cursor:"pointer", color:"var(--text-sub)", fontSize:14, outline:"none", lineHeight:1 }}>
             Reset
@@ -666,7 +686,7 @@ function App() {
           const isPlayed   = ev.status === "played";
           return (
             <div key={ev.id} style={{ background:"var(--card-bg)", border:`1px solid ${isPlayed?"var(--card-border-played)":"var(--card-border-upcoming)"}`, borderRadius:9, padding:"8px 13px" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
+              <div className="event-header-row" style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
                 <span style={{ fontSize:11, color:"var(--btn-number-color)", fontFamily:"'IBM Plex Mono', monospace", minWidth:16 }}>{idx+1}</span>
                 <button onClick={()=>toggleType(ev.id)} title="Swap Regional / IC"
                   style={{ background:ev.type==="ic"?"var(--badge-ic-bg)":"var(--badge-reg-bg)", border:`1px solid ${ev.type==="ic"?"var(--badge-ic-border)":"var(--badge-reg-border)"}`, color:ev.type==="ic"?"var(--badge-ic-color)":"var(--badge-reg-color)", borderRadius:5, padding:"2px 8px", fontSize:10, cursor:"pointer", fontWeight:600, letterSpacing:"0.04em", outline:"none" }}>
@@ -680,7 +700,7 @@ function App() {
                   <button onClick={()=>removeEvent(ev.id)} style={{ marginLeft:"auto", background:"none", border:"none", color:"var(--text-dim)", cursor:"pointer", fontSize:14, padding:"0 2px", outline:"none" }} title="Remove event">&times;</button>
                 )}
               </div>
-              <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
+              <div className="event-placements" style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
                 {placements.map(p => {
                   const active = ev.placement === p.label;
                   return (
@@ -703,7 +723,7 @@ function App() {
       </div>
 
       <div style={{ background:topBg||"rgba(255,255,255,0.02)", border:`1px solid ${topColor?topColor+"40":"var(--card-border)"}`, borderRadius:11, padding:"14px 18px", marginBottom:20 }}>
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+        <div className="totals-row" style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
           <div>
             <div style={{ fontSize:10, color:"var(--text-muted)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>
               Total Championship Points{!allSelected?" \u2014 partial":""}
@@ -738,7 +758,7 @@ function App() {
       </div>
 
       <div className="controls-bar" ref={controlsRef}>
-        <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
+        <div className="controls-inner" style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
           <div>
             <div style={{ fontSize:13, fontWeight:600, color:"var(--text-primary)", marginBottom:1 }}>Remaining Combinations</div>
             <div style={{ fontSize:11, color:"var(--text-muted)" }}>
@@ -751,7 +771,7 @@ function App() {
               </div>
             )}
           </div>
-          <div style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"flex-end" }}>
+          <div className="controls-filters" style={{ display:"flex", gap:8, flexWrap:"wrap", alignItems:"flex-end" }}>
             <div>
               <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Excl. Reg better than</div>
               <select value={regCapCp??""} onChange={e=>setRegCapCp(e.target.value===""?null:Number(e.target.value))} style={selStyle}>
