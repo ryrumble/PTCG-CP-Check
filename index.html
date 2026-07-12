@@ -12,9 +12,6 @@
     body.dark  { background: #080c18; }
     body.light { background: #eef2f7; }
 
-    /* ═══════════════════════════════════════════════
-       CSS COLOR TOKENS — edit here to change globally
-       ═══════════════════════════════════════════════ */
     body.dark {
       --text-primary:          #e2e8f0;
       --text-muted:            #64748b;
@@ -163,7 +160,6 @@
       --total-cp-unmet:        #374151;
     }
 
-    /* ── Sticky controls bar ── */
     .controls-bar {
       position: sticky; top: 0; z-index: 50;
       padding: 10px 18px 8px; margin: 0 -18px;
@@ -173,12 +169,10 @@
     body.dark  .controls-bar { background: rgba(8,12,24,0.92); }
     body.light .controls-bar { background: rgba(238,242,247,0.92); }
 
-    /* ── Sticky thead (sticks at top:0 within scroll container) ── */
     .combo-table thead th { position: sticky; top: 0; z-index: 40; }
     body.dark  .combo-table thead th { background: #0e1525; }
     body.light .combo-table thead th { background: #e8edf4; }
 
-    /* ── Table scroll wrapper (own scroll context, square corners) ── */
     .table-scroll-wrap {
       overflow: auto;
       max-height: calc(100vh - var(--controls-bar-height, 90px) - 20px);
@@ -198,7 +192,6 @@
     body.light .tooltip-box { background: #fff;    border: 1px solid rgba(0,0,0,0.12);       color: #475569; }
     .tooltip-wrap:hover .tooltip-box { display: block; }
 
-    /* ── Inline hint badges in header text ── */
     .hint-badge {
       display: inline-flex; align-items: center; gap: 3px;
       border-radius: 5px; padding: 1px 7px; font-size: 10px;
@@ -215,9 +208,24 @@
   <div id="root"></div>
   <script type="text/babel">
 
-/* ══════════════════════════════════
-   PLACEMENT DATA
-══════════════════════════════════ */
+const STORAGE_KEY = "ptcg-cp-cache";
+
+function loadCachedState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || !Array.isArray(parsed.events)) return null;
+    const valid = parsed.events.every(e =>
+      typeof e.id === "number" &&
+      (e.type === "reg" || e.type === "ic") &&
+      (e.status === "played" || e.status === "upcoming")
+    );
+    if (!valid) return null;
+    return parsed;
+  } catch { return null; }
+}
+
 const REG_PLACEMENTS = [
   { label: "2nd",   cp: 325 }, { label: "T4",    cp: 300 },
   { label: "T8",    cp: 280 }, { label: "T16",   cp: 200 },
@@ -247,9 +255,6 @@ const CUP_PLACEMENTS = [
   { label: "T64",   cp: 13 }, { label: "No CP", cp: 0 },
 ];
 
-/* ══════════════════════════════════
-   CONSTANTS
-══════════════════════════════════ */
 const TOP_N          = 5;
 const CHALLENGE_BFL  = 4;
 const CUP_BFL        = 4;
@@ -270,9 +275,6 @@ const THRESH_COLORS = {
   775: "var(--thresh-775)", 800: "var(--thresh-800)",
 };
 
-/* ══════════════════════════════════
-   THRESHOLD HELPERS
-══════════════════════════════════ */
 function getThresholdColor(total) {
   if (total >= 800) return "var(--thresh-800)";
   if (total >= 775) return "var(--thresh-775)";
@@ -292,9 +294,6 @@ function getThresholdBg(total) {
   return null;
 }
 
-/* ══════════════════════════════════
-   COMBO MATH
-══════════════════════════════════ */
 function multisetCombos(vals, k) {
   if (k === 0) return [[]];
   const res = [];
@@ -308,17 +307,10 @@ function multisetCombos(vals, k) {
   return res;
 }
 
-/* ══════════════════════════════════
-   PLACEMENT UTILS
-══════════════════════════════════ */
 const getPlacements = (type) => type === "ic" ? IC_PLACEMENTS : REG_PLACEMENTS;
 const getCP         = (type, label) => getPlacements(type).find(p => p.label === label)?.cp ?? 0;
 const cpToLabel     = (type, cp)    => getPlacements(type).find(p => p.cp === cp)?.label ?? "?";
 
-/* ══════════════════════════════════
-   DEFAULT STATE
-══════════════════════════════════ */
-let nextId = 6;
 const DEFAULT_EVENTS = [
   { id: 0, type: "reg", status: "played",   placement: "T64"   },
   { id: 1, type: "reg", status: "played",   placement: "T1024" },
@@ -327,13 +319,9 @@ const DEFAULT_EVENTS = [
   { id: 4, type: "reg", status: "upcoming", placement: null    },
   { id: 5, type: "ic",  status: "upcoming", placement: null    },
 ];
-// Default locals: all maxed → 4×15 + 4×50 = 260
 const DEFAULT_CHALLENGES = [15, 15, 15, 15];
 const DEFAULT_CUPS       = [50, 50, 50, 50];
 
-/* ══════════════════════════════════
-   SLOT ROW (used in LocalsEditor)
-══════════════════════════════════ */
 function SlotRow({ idx, placements, slots, setter }) {
   const setSlot = (cp) => setter(s => s.map((v, i) => i === idx ? cp : v));
   return (
@@ -363,9 +351,6 @@ function SlotRow({ idx, placements, slots, setter }) {
   );
 }
 
-/* ══════════════════════════════════
-   LOCALS EDITOR COMPONENT
-══════════════════════════════════ */
 function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots, localCP }) {
   const [open, setOpen] = React.useState(false);
   const challengeTotal  = challengeSlots.reduce((a, b) => a + b, 0);
@@ -373,28 +358,25 @@ function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots
 
   return (
     <div style={{ marginBottom: 12, background: "var(--card-bg)", border: "1px solid var(--card-border)", borderRadius: 9, overflow: "hidden" }}>
-      {/* Toggle header */}
       <button onClick={() => setOpen(o => !o)} style={{
         width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
         background: "none", border: "none", padding: "10px 14px", cursor: "pointer",
         color: "var(--text-primary)", outline: "none"
       }}>
-        <span style={{ fontSize: 12, fontWeight: 500 }}>⚙ Edit Challenges / Cups CP</span>
+        <span style={{ fontSize: 12, fontWeight: 500 }}>Edit Challenges / Cups CP</span>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span style={{ fontSize: 11, color: "var(--sub-total-color)", fontFamily: "'IBM Plex Mono', monospace" }}>
             Challenges <strong style={{ color: "var(--text-primary)" }}>{challengeTotal}</strong>
             {" + "}Cups <strong style={{ color: "var(--text-primary)" }}>{cupTotal}</strong>
             {" = "}<strong style={{ color: "var(--text-primary)" }}>{localCP} CP</strong>
           </span>
-          <span style={{ fontSize: 12, color: "var(--text-muted)", display: "inline-block", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>▾</span>
+          <span style={{ fontSize: 12, color: "var(--text-muted)", display: "inline-block", transform: open ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>&#9662;</span>
         </div>
       </button>
 
-      {/* Expanded panel */}
       {open && (
         <div style={{ padding: "0 14px 14px", borderTop: "1px solid var(--card-border)" }}>
           <div style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingTop: 12 }}>
-            {/* Challenges */}
             <div style={{ flex: "1 1 240px", minWidth: 240 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
                 <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text-primary)" }}>
@@ -406,7 +388,6 @@ function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots
                 <SlotRow key={idx} idx={idx} placements={CHALLENGE_PLACEMENTS} slots={challengeSlots} setter={setChallengeSlots} />
               ))}
             </div>
-            {/* Cups */}
             <div style={{ flex: "1 1 320px", minWidth: 300 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
                 <span style={{ fontSize: 12, fontWeight: 600, color: "var(--text-primary)" }}>
@@ -425,9 +406,6 @@ function LocalsEditor({ challengeSlots, setChallengeSlots, cupSlots, setCupSlots
   );
 }
 
-/* ══════════════════════════════════
-   CHIP COMPONENTS
-══════════════════════════════════ */
 function Chip({ label, cp, variant }) {
   const cfg = {
     "played-reg":  { bg:"var(--chip-played-bg)", border:"var(--chip-played-border)", color:"var(--chip-played-color)", cpColor:"var(--chip-played-cp)" },
@@ -456,18 +434,16 @@ function DashChip() {
       borderRadius: 5, padding: "2px 8px",
       fontFamily: "'IBM Plex Mono', monospace",
       color: "var(--chip-dash-color)", fontSize: 11, fontStyle: "italic"
-    }}>—</span>
+    }}>&#8212;</span>
   );
 }
 
-/* ══════════════════════════════════
-   MAIN APP
-══════════════════════════════════ */
 function App() {
-  const [dark, setDark] = React.useState(true);
+  const cached = React.useMemo(() => loadCachedState(), []);
+
+  const [dark, setDark] = React.useState(cached?.dark ?? true);
   React.useEffect(() => { document.body.className = dark ? "dark" : "light"; }, [dark]);
 
-  // measure controls bar for sticky thead offset
   const controlsRef = React.useRef(null);
   React.useEffect(() => {
     function measure() {
@@ -482,14 +458,24 @@ function App() {
 
   const [subtitle] = React.useState(() => SUBTITLES[Math.floor(Math.random() * SUBTITLES.length)]);
 
-  const [events,         setEvents]         = React.useState(DEFAULT_EVENTS);
-  const [minTotal,       setMinTotal]       = React.useState(740);
-  const [sortDir,        setSortDir]        = React.useState("asc");
-  const [regCapCp,       setRegCapCp]       = React.useState(null);
-  const [icCapCp,        setIcCapCp]        = React.useState(null);
+  const [events,         setEvents]         = React.useState(cached?.events ?? DEFAULT_EVENTS);
+  const [minTotal,       setMinTotal]       = React.useState(cached?.minTotal ?? 740);
+  const [sortDir,        setSortDir]        = React.useState(cached?.sortDir ?? "asc");
+  const [regCapCp,       setRegCapCp]       = React.useState(cached?.regCapCp ?? null);
+  const [icCapCp,        setIcCapCp]        = React.useState(cached?.icCapCp ?? null);
   const [copyStatus,     setCopyStatus]     = React.useState("");
-  const [challengeSlots, setChallengeSlots] = React.useState(DEFAULT_CHALLENGES);
-  const [cupSlots,       setCupSlots]       = React.useState(DEFAULT_CUPS);
+  const [challengeSlots, setChallengeSlots] = React.useState(cached?.challengeSlots ?? DEFAULT_CHALLENGES);
+  const [cupSlots,       setCupSlots]       = React.useState(cached?.cupSlots ?? DEFAULT_CUPS);
+
+  React.useEffect(() => {
+    const state = { events, challengeSlots, cupSlots, dark, minTotal, sortDir, regCapCp, icCapCp };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  });
+
+  const resetState = () => {
+    localStorage.removeItem(STORAGE_KEY);
+    window.location.reload();
+  };
 
   const localCP = React.useMemo(() =>
     challengeSlots.reduce((a,b)=>a+b,0) + cupSlots.reduce((a,b)=>a+b,0),
@@ -499,7 +485,7 @@ function App() {
   const toggleType      = (id) => setEvents(evs => evs.map(e => e.id===id ? {...e,type:e.type==="reg"?"ic":"reg",placement:null} : e));
   const toggleStatus    = (id) => setEvents(evs => evs.map(e => e.id===id ? {...e,status:e.status==="played"?"upcoming":"played",placement:null} : e));
   const togglePlacement = (id, label) => setEvents(evs => evs.map(e => e.id===id ? {...e,placement:e.placement===label?null:label} : e));
-  const addEvent        = () => { if (events.length < 12) setEvents(evs => [...evs, {id:nextId++,type:"reg",status:"upcoming",placement:null}]); };
+  const addEvent        = () => { if (events.length < 12) setEvents(evs => { const maxId = evs.length > 0 ? Math.max(...evs.map(e => e.id)) : -1; return [...evs, {id:maxId+1,type:"reg",status:"upcoming",placement:null}]; }); };
   const removeEvent     = (id) => { if (events.length > 1) setEvents(evs => evs.filter(e => e.id!==id)); };
 
   const playedRegEvents   = React.useMemo(() => events.filter(e=>e.status==="played"  &&e.type==="reg"), [events]);
@@ -511,7 +497,6 @@ function App() {
   const nUpcomingIC  = upcomingICEvents.length;
   const nUpcoming    = nUpcomingReg + nUpcomingIC;
 
-  // Partial total — works even if not all events selected
   const allSelectedCPs = React.useMemo(() =>
     events.filter(e=>e.placement).map(e=>getCP(e.type,e.placement)).sort((a,b)=>b-a),
     [events]
@@ -541,7 +526,6 @@ function App() {
     [icCapCp]
   );
 
-  /* ── Combination builder with unified BFL/zero deduplication ── */
   const { combos, totalCount } = React.useMemo(() => {
     const pCPs      = [...playedRegData.map(p=>p.cp), ...playedICData.map(p=>p.cp)];
     const regCombos = multisetCombos(allowedRegCPs, nUpcomingReg);
@@ -556,12 +540,10 @@ function App() {
         const t    = mSum + localCP;
         if (t < minTotal) continue;
 
-        // Build available pool: upcoming CPs that land in top-5
         const top5vals  = allC.slice(0,TOP_N);
         const availPool = [...top5vals];
         for (const pc of pCPs) { const i=availPool.indexOf(pc); if(i!==-1) availPool.splice(i,1); }
 
-        // Tag each upcoming slot — highest CPs get priority; cp=0 never contributes
         const upAll = [
           ...regC.map((cp,j)=>({cp,src:'reg',j})),
           ...icC.map((cp,j) =>({cp,src:'ic', j})),
@@ -573,13 +555,11 @@ function App() {
           u.contributes = false;
         });
 
-        // Deduplicate: key = played signature + contributing upcoming by type+cp
         const contribParts = upAll.filter(u=>u.contributes).map(u=>`${u.src}:${u.cp}`).sort();
         const key = pCPs.slice().sort((a,b)=>b-a).join(',') + '||' + contribParts.join('|');
         if (seen.has(key)) continue;
         seen.add(key);
 
-        // Build display arrays: show=true → result chip; show=false → "—"
         const regDisp = regC.map((cp,j) => ({ cp, show: !!(upAll.find(u=>u.src==='reg'&&u.j===j)?.contributes) }));
         const icDisp  = icC.map( (cp,j) => ({ cp, show: !!(upAll.find(u=>u.src==='ic' &&u.j===j)?.contributes) }));
 
@@ -591,7 +571,6 @@ function App() {
     return { combos: results.slice(0,MAX_DISPLAY), totalCount: results.length };
   }, [playedRegData, playedICData, nUpcomingReg, nUpcomingIC, allowedRegCPs, allowedICCPs, minTotal, sortDir, localCP]);
 
-  /* ── Export ── */
   const buildTableData = React.useCallback(() => {
     const headers = [
       ...playedRegData.map((_,i)=>`Played Reg ${i+1}`),
@@ -603,8 +582,8 @@ function App() {
     const rows = combos.map(row => [
       ...playedRegData.map(p=>`${p.label}(${p.cp})`),
       ...playedICData.map(p =>`${p.label}(${p.cp})`),
-      ...row.regC.map(({cp,show})=>show?`${cpToLabel("reg",cp)}(${cp})`:"—"),
-      ...row.icC.map( ({cp,show})=>show?`${cpToLabel("ic", cp)}(${cp})`:"—"),
+      ...row.regC.map(({cp,show})=>show?`${cpToLabel("reg",cp)}(${cp})`:"\u2014"),
+      ...row.icC.map( ({cp,show})=>show?`${cpToLabel("ic", cp)}(${cp})`:"\u2014"),
       row.mSum, row.total,
     ]);
     return [headers, ...rows];
@@ -621,7 +600,7 @@ function App() {
 
   const copyToClipboard = React.useCallback(async () => {
     const text = buildTableData().map(r=>r.join("\t")).join("\n");
-    try { await navigator.clipboard.writeText(text); setCopyStatus("✓ Copied"); }
+    try { await navigator.clipboard.writeText(text); setCopyStatus("\u2713 Copied"); }
     catch { setCopyStatus("Failed"); }
     setTimeout(()=>setCopyStatus(""),2200);
   }, [buildTableData]);
@@ -642,43 +621,45 @@ function App() {
     <div style={{ minHeight:"100vh", background:"var(--page-bg)", fontFamily:"'IBM Plex Sans', sans-serif", color:"var(--text-primary)", padding:"24px 18px", maxWidth:1080, margin:"0 auto" }}>
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
-      {/* ── Header ── */}
       <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:16, gap:12 }}>
         <div>
           <h1 style={{ margin:"0 0 3px", fontSize:20, fontWeight:600, color:"var(--text-primary)", letterSpacing:"-0.02em" }}>
-            2026 Pokémon TCG CP Calculator
+            2026 Pokemon TCG CP Calculator
           </h1>
           <p style={{ margin:"0 0 5px", fontSize:11, fontStyle:"italic", color:"var(--text-muted)" }}>{subtitle}</p>
           <p style={{ margin:0, fontSize:11, color:"var(--text-muted)", lineHeight:1.9 }}>
-            Top {TOP_N} major finishes count (BFL) · +{localCP} CP for Challenges/Cups ·{" "}
-            Click <span className="hint-badge hint-badge-reg">🏆 Regional</span> or <span className="hint-badge hint-badge-ic">⚡ IC</span> to swap ·{" "}
+            Top {TOP_N} major finishes count (BFL) +{localCP} CP for Challenges/Cups {" "}
+            Click <span className="hint-badge hint-badge-reg">Regional</span> or <span className="hint-badge hint-badge-ic">IC</span> to swap {" "}
             Click <span className="hint-badge hint-badge-played">Played</span> or <span className="hint-badge hint-badge-upcoming">Upcoming</span> to toggle
           </p>
         </div>
-        <div style={{ display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, flexShrink:0 }}>
+          <button onClick={resetState} title="Reset to defaults"
+            style={{ background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", borderRadius:8, padding:"9px 14px", cursor:"pointer", color:"var(--text-sub)", fontSize:14, outline:"none", lineHeight:1 }}>
+            Reset
+          </button>
           <button onClick={()=>setDark(d=>!d)} title={dark?"Switch to light mode":"Switch to dark mode"}
             style={{ background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", borderRadius:8, padding:"9px 16px", cursor:"pointer", color:"var(--text-sub)", fontSize:20, outline:"none", lineHeight:1 }}>
-            {dark?"☀️":"🌙"}
+            {dark?"\u2600\uFE0F":"\uD83C\uDF19"}
           </button>
           <div className="tooltip-wrap">
-            <div style={{ width:38, height:38, borderRadius:"50%", background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", display:"flex", alignItems:"center", justifyContent:"center", cursor:"default", color:"var(--text-muted)", fontSize:17, fontWeight:700, userSelect:"none" }}>ℹ</div>
+            <div style={{ width:38, height:38, borderRadius:"50%", background:"var(--toggle-bg)", border:"1px solid var(--toggle-border)", display:"flex", alignItems:"center", justifyContent:"center", cursor:"default", color:"var(--text-muted)", fontSize:17, fontWeight:700, userSelect:"none" }}>i</div>
             <div className="tooltip-box">
               <strong style={{ color:"var(--text-primary)", display:"block", marginBottom:6 }}>How to use</strong>
               Add events using <em>+ Add Event Slot</em>. Toggle between <strong>Regional</strong> and <strong>IC</strong> (your majors), and <strong>Played</strong> / <strong>Upcoming</strong>. For played events, click a finish to lock it in.<br /><br />
-              The <strong>Remaining Combinations</strong> table enumerates every finish at your upcoming majors. "—" means that slot doesn't affect your total (0 pts or outside top-{TOP_N}). Use the <em>Excl.</em> dropdowns to hide unrealistic deep runs.<br /><br />
-              Use <strong>⚙ Edit Challenges / Cups CP</strong> to set your locals total.
+              The <strong>Remaining Combinations</strong> table enumerates every finish at your upcoming majors. A dash means that slot does not affect your total (0 pts or outside top-{TOP_N}). Use the <em>Excl.</em> dropdowns to hide unrealistic deep runs.<br /><br />
+              Use <strong>Edit Challenges / Cups CP</strong> to set your locals total.<br /><br />
+              Your selections are saved automatically. Use <strong>Reset</strong> to restore defaults.
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Locals Editor ── */}
       <LocalsEditor
         challengeSlots={challengeSlots} setChallengeSlots={setChallengeSlots}
         cupSlots={cupSlots} setCupSlots={setCupSlots} localCP={localCP}
       />
 
-      {/* ── Event rows ── */}
       <div style={{ display:"flex", flexDirection:"column", gap:6, marginBottom:16 }}>
         {events.map((ev, idx) => {
           const placements = getPlacements(ev.type);
@@ -687,16 +668,16 @@ function App() {
             <div key={ev.id} style={{ background:"var(--card-bg)", border:`1px solid ${isPlayed?"var(--card-border-played)":"var(--card-border-upcoming)"}`, borderRadius:9, padding:"8px 13px" }}>
               <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:7 }}>
                 <span style={{ fontSize:11, color:"var(--btn-number-color)", fontFamily:"'IBM Plex Mono', monospace", minWidth:16 }}>{idx+1}</span>
-                <button onClick={()=>toggleType(ev.id)} title="Swap Regional ↔ IC"
+                <button onClick={()=>toggleType(ev.id)} title="Swap Regional / IC"
                   style={{ background:ev.type==="ic"?"var(--badge-ic-bg)":"var(--badge-reg-bg)", border:`1px solid ${ev.type==="ic"?"var(--badge-ic-border)":"var(--badge-reg-border)"}`, color:ev.type==="ic"?"var(--badge-ic-color)":"var(--badge-reg-color)", borderRadius:5, padding:"2px 8px", fontSize:10, cursor:"pointer", fontWeight:600, letterSpacing:"0.04em", outline:"none" }}>
-                  {ev.type==="ic"?"⚡ IC":"🏆 Regional"}
+                  {ev.type==="ic"?"\u26A1 IC":"\uD83C\uDFC6 Regional"}
                 </button>
                 <button onClick={()=>toggleStatus(ev.id)}
                   style={{ background:isPlayed?"var(--badge-played-bg)":"var(--badge-upcoming-bg)", border:`1px solid ${isPlayed?"var(--badge-played-border)":"var(--badge-upcoming-border)"}`, color:isPlayed?"var(--badge-played-color)":"var(--badge-upcoming-color)", borderRadius:5, padding:"2px 8px", fontSize:10, cursor:"pointer", fontWeight:600, letterSpacing:"0.04em", outline:"none" }}>
                   {isPlayed?"Played":"Upcoming"}
                 </button>
                 {events.length > 1 && (
-                  <button onClick={()=>removeEvent(ev.id)} style={{ marginLeft:"auto", background:"none", border:"none", color:"var(--text-dim)", cursor:"pointer", fontSize:14, padding:"0 2px", outline:"none" }} title="Remove event">×</button>
+                  <button onClick={()=>removeEvent(ev.id)} style={{ marginLeft:"auto", background:"none", border:"none", color:"var(--text-dim)", cursor:"pointer", fontSize:14, padding:"0 2px", outline:"none" }} title="Remove event">&times;</button>
                 )}
               </div>
               <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
@@ -721,12 +702,11 @@ function App() {
         )}
       </div>
 
-      {/* ── Result panel (always visible) ── */}
       <div style={{ background:topBg||"rgba(255,255,255,0.02)", border:`1px solid ${topColor?topColor+"40":"var(--card-border)"}`, borderRadius:11, padding:"14px 18px", marginBottom:20 }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
           <div>
             <div style={{ fontSize:10, color:"var(--text-muted)", textTransform:"uppercase", letterSpacing:"0.08em", marginBottom:4 }}>
-              Total Championship Points{!allSelected?" — partial":""}
+              Total Championship Points{!allSelected?" \u2014 partial":""}
             </div>
             <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
               <span style={{ fontSize:38, fontWeight:600, fontFamily:"'IBM Plex Mono', monospace", color:topColor||"var(--text-primary)", letterSpacing:"-0.03em", lineHeight:1 }}>
@@ -736,7 +716,7 @@ function App() {
             </div>
             {!allSelected && (
               <div style={{ fontSize:10, color:"#b45309", marginTop:5 }}>
-                ⚠ {nUnselected} event{nUnselected!==1?"s":""} still {nUnselected===1?"needs":"need"} a placement selected
+                {"\u26A0 "} {nUnselected} event{nUnselected!==1?"s":""} still {nUnselected===1?"needs":"need"} a placement selected
               </div>
             )}
           </div>
@@ -748,7 +728,7 @@ function App() {
                 <div key={t} style={{ display:"flex", alignItems:"center", gap:6, fontSize:11, opacity:hit?1:0.35 }}>
                   <div style={{ width:6, height:6, borderRadius:"50%", background:hit?col:"var(--text-dim)" }} />
                   <span style={{ color:hit?col:"var(--text-muted)", fontFamily:"'IBM Plex Mono', monospace" }}>
-                    {t} {hit?"✓":`(need ${t-totalCP} more)`}
+                    {t} {hit?"\u2713":"(need "+(t-totalCP)+" more)"}
                   </span>
                 </div>
               );
@@ -757,18 +737,17 @@ function App() {
         </div>
       </div>
 
-      {/* ── Sticky controls bar ── */}
       <div className="controls-bar" ref={controlsRef}>
         <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
           <div>
             <div style={{ fontSize:13, fontWeight:600, color:"var(--text-primary)", marginBottom:1 }}>Remaining Combinations</div>
             <div style={{ fontSize:11, color:"var(--text-muted)" }}>
-              {nUpcomingReg} upcoming reg · {nUpcomingIC} upcoming IC ·{" "}
-              {totalCount>MAX_DISPLAY ? `showing top ${MAX_DISPLAY} of ${totalCount.toLocaleString()}` : `${totalCount} unique combination${totalCount!==1?"s":""}`}
+              {nUpcomingReg} upcoming reg {"\u00B7"} {nUpcomingIC} upcoming IC {"\u00B7"}{" "}
+              {totalCount>MAX_DISPLAY ? "showing top "+MAX_DISPLAY+" of "+totalCount.toLocaleString() : totalCount+" unique combination"+(totalCount!==1?"s":"")}
             </div>
             {nUpcomingUnset > 0 && (
               <div style={{ fontSize:10, color:"#b45309", marginTop:2 }}>
-                ⚠ {nUpcomingUnset} upcoming event{nUpcomingUnset!==1?"s":""} have no placement selected — those slots are still enumerated below
+                {"\u26A0 "} {nUpcomingUnset} upcoming event{nUpcomingUnset!==1?"s":""} have no placement selected {"\u2014"} those slots are still enumerated below
               </div>
             )}
           </div>
@@ -796,22 +775,21 @@ function App() {
             <div>
               <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Sort</div>
               <select value={sortDir} onChange={e=>setSortDir(e.target.value)} style={selStyle}>
-                <option value="desc">High → Low</option>
-                <option value="asc">Low → High</option>
+                <option value="desc">High {"\u2192"} Low</option>
+                <option value="asc">Low {"\u2192"} High</option>
               </select>
             </div>
             <div>
               <div style={{ fontSize:10, color:"var(--text-muted)", marginBottom:3, textTransform:"uppercase", letterSpacing:"0.06em" }}>Export</div>
               <div style={{ display:"flex", gap:4 }}>
                 <button onClick={copyToClipboard} style={{ background:copyStatus?"rgba(34,197,94,0.14)":"var(--add-btn-bg)", border:`1px solid ${copyStatus?"rgba(34,197,94,0.35)":"var(--card-border)"}`, borderRadius:6, padding:"5px 10px", cursor:"pointer", color:copyStatus?"var(--thresh-800)":"var(--text-sub)", fontSize:11, outline:"none", minWidth:72, textAlign:"center", transition:"all 0.18s" }}>
-                  {copyStatus||"📋 Copy"}
+                  {copyStatus||"\uD83D\uDCCB Copy"}
                 </button>
-                <button onClick={downloadCSV} style={{ background:"var(--add-btn-bg)", border:"1px solid var(--card-border)", borderRadius:6, padding:"5px 10px", cursor:"pointer", color:"var(--text-sub)", fontSize:11, outline:"none" }}>⬇ CSV</button>
+                <button onClick={downloadCSV} style={{ background:"var(--add-btn-bg)", border:"1px solid var(--card-border)", borderRadius:6, padding:"5px 10px", cursor:"pointer", color:"var(--text-sub)", fontSize:11, outline:"none" }}>{"\u2B07"} CSV</button>
               </div>
             </div>
           </div>
         </div>
-        {/* Legend */}
         <div style={{ display:"flex", gap:10, marginTop:8, flexWrap:"wrap", alignItems:"center" }}>
           {THRESHOLDS.map(t=>(
             <div key={t} style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
@@ -834,12 +812,11 @@ function App() {
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:4, fontSize:10 }}>
             <div style={{ width:8, height:8, borderRadius:2, background:"var(--chip-dash-bg)", border:"1px solid var(--chip-dash-border)" }} />
-            <span style={{ color:"var(--text-muted)" }}>— (0 pts or outside top {TOP_N})</span>
+            <span style={{ color:"var(--text-muted)" }}>{"\u2014"} (0 pts or outside top {TOP_N})</span>
           </div>
         </div>
       </div>
 
-      {/* ── Table ── */}
       <div className="table-scroll-wrap">
         <table className="combo-table" style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
           <thead>
@@ -910,7 +887,7 @@ function App() {
 
       {totalCount > MAX_DISPLAY && (
         <div style={{ marginTop:8, fontSize:11, color:"var(--text-muted)", textAlign:"center" }}>
-          Showing top {MAX_DISPLAY} of {totalCount.toLocaleString()} — raise Min CP or add exclusions to narrow results
+          Showing top {MAX_DISPLAY} of {totalCount.toLocaleString()} {"\u2014"} raise Min CP or add exclusions to narrow results
         </div>
       )}
     </div>
